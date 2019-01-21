@@ -35,9 +35,6 @@ public class MovieServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		response.setContentType("application/json");
 		
-		String movie_name = request.getParameter("movie_name");
-//		System.out.println(movie_name);
-		
 		PrintWriter out = response.getWriter();
 		
 		try {
@@ -46,11 +43,6 @@ public class MovieServlet extends HttpServlet {
 			
 			Statement statement = dbcon.createStatement();
 			
-//			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name as Genre, stars.name as Stars,stars.id, ratings.rating "
-//					+ "FROM movies, ratings, genres, genres_in_movies, stars, stars_in_movies "
-//					+ "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and "
-//					+ "stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id "
-//					+ "ORDER BY ratings.rating DESC"; 
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name, stars.name as Stars, stars.id, ratings.rating,genres.name as Genre "
 					       + "FROM movies, (select * from ratings order by rating desc limit 20) ratings, genres, genres_in_movies, stars, stars_in_movies "
 					       + "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id " 
@@ -62,6 +54,7 @@ public class MovieServlet extends HttpServlet {
 			
 			String current_movieId = "";
 			String current_genre = "";
+			String check_genre = "";
 			
 			while (rs.next())
 			{	
@@ -86,6 +79,10 @@ public class MovieServlet extends HttpServlet {
 				String movie_year = rs.getString("movies.year");
 				String movie_director = rs.getString("movies.director");
 				String movie_genre = rs.getString("Genre");
+				if (check_genre.equals(""))
+				{
+					check_genre = movie_genre;
+				}
 				
 				if (current_genre.equals(""))
 				{
@@ -110,8 +107,12 @@ public class MovieServlet extends HttpServlet {
 						String next_star = rs.getString("Stars");
 						String next_id = rs.getString("stars.id");
 						
-						movie_starArray.add(next_star);
-						starIdArray.add(next_id);
+						if (check_genre.equals(next_genre))
+						{
+							movie_starArray.add(next_star);
+							starIdArray.add(next_id);
+						}
+						
 						if (!current_genre.equals(next_genre))
 						{	
 							current_genre = next_genre;
@@ -120,6 +121,7 @@ public class MovieServlet extends HttpServlet {
 					}
 					else
 					{
+						check_genre = "";
 						current_movieId = next_movieId;
 						current_genre = next_genre;
 						rs.previous();

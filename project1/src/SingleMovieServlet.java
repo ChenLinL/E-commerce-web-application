@@ -43,7 +43,6 @@ public class SingleMovieServlet extends HttpServlet {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
 			
-			
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name as Genre, stars.name as Stars, stars.id, ratings.rating "
 					+ "FROM movies, ratings, genres, genres_in_movies, stars, stars_in_movies "
 					+ "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and "
@@ -67,7 +66,6 @@ public class SingleMovieServlet extends HttpServlet {
 			while (rs.next())
 			{	
 				String movie_id = rs.getString("movies.id");
-				//System.out.println(movie_id);
 				
 				if (current_movieId.equals(""))
 				{

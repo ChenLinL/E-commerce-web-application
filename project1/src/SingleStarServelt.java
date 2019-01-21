@@ -50,21 +50,13 @@ public class SingleStarServelt extends HttpServlet {
 			+ "FROM movies, stars, stars_in_movies "
 			+ "WHERE stars.id = ? and stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id";
 
-
-			//System.out.print("ahfdoahk");	
-			//System.out.print(query);
 			PreparedStatement statement = dbcon.prepareStatement(query);
 
 			// Set the parameter represented by "?" in the query to the id we get from url,
 			// num 1 indicates the first "?" in the query
 			statement.setString(1, id);
-			//System.out.println(statement);
 			// Perform the query
-			//System.out.println("465");
 			ResultSet rs = statement.executeQuery();
-			//System.out.println(rs);
-			//System.out.println(rs.getString("stars.name"));
-			//System.out.println("46514545156165315631653");
 			
 			JsonArray jsonArray = new JsonArray();
 			
@@ -73,7 +65,6 @@ public class SingleStarServelt extends HttpServlet {
 			while (rs.next())
 			{	
 				String star_id = rs.getString("stars.id");
-				//System.out.println(star_id);
 				
 				if (current_starId.equals(""))
 				{
