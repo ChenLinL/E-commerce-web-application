@@ -3,7 +3,7 @@
 USE moviedb;
 
 create table movies(
-	id varchar(10),
+	id varchar(10) not null,
     title varchar(100) not null,
     year integer not null,
     director varchar(100) not null,
@@ -11,15 +11,15 @@ create table movies(
 );
 
 create table stars(
-	id varchar(10) ,
+	id varchar(10) not null,
     name varchar(100) not null,
     birthYear integer,
     PRIMARY KEY(id)
 );
 
 create table stars_in_movies(
-	starId varchar(10),
-    movieId varchar(10),
+	starId varchar(10) not null,
+    movieId varchar(10) not null,
     
     foreign key (starId) references stars(id) ON DELETE CASCADE,
     foreign key (movieId) references movies(id) ON DELETE CASCADE,
@@ -33,8 +33,8 @@ create table genres(
 );
 
 create table genres_in_movies(
-	genreId integer,
-    movieId varchar(10),
+	genreId integer not null,
+    movieId varchar(10) not null,
     
     foreign key (genreId) references genres(id) ON DELETE CASCADE,
 	
@@ -43,7 +43,7 @@ create table genres_in_movies(
 );
 
 create table creditcards(
-	id varchar(20),
+	id varchar(20) not null,
     firstName varchar(50) not null,
     lastName varchar(50) not null,
     expiration date not null,
