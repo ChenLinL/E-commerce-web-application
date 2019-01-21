@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
@@ -49,6 +51,8 @@ public class SingleMovieServlet extends HttpServlet {
 					+ "stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id and movies.id = ? ";
 				
 			
+			System.out.println("RUNNING SINGLEMOVIE SERVLET");
+			
 			PreparedStatement statement = dbcon.prepareStatement(query);
 
 			// Set the parameter represented by "?" in the query to the id we get from url,
@@ -60,17 +64,13 @@ public class SingleMovieServlet extends HttpServlet {
 			
 			JsonArray jsonArray = new JsonArray();
 			
-			String current_movieId = "";
-			String current_genre = "";
+			List<String> genre_list = new ArrayList<String>();
+			List<String> actor_list = new ArrayList<String>();
+			List<String> actor_idlist = new ArrayList<String>();
 			
 			while (rs.next())
 			{	
 				String movie_id = rs.getString("movies.id");
-				
-				if (current_movieId.equals(""))
-				{
-					current_movieId = movie_id;
-				}
 				
 				// Create a JsonObject to store all the data
 				JsonObject jsonObject = new JsonObject();
@@ -80,52 +80,56 @@ public class SingleMovieServlet extends HttpServlet {
 				
 				// Create a JsonArray to store the list of stars
 				JsonArray movie_starArray = new JsonArray();
-				
 				JsonArray starIdArray = new JsonArray();
 				
 				String movie_title = rs.getString("movies.title");
 				String movie_year = rs.getString("movies.year");
 				String movie_director = rs.getString("movies.director");
 				String movie_genre = rs.getString("Genre");
-				
-				if (current_genre.equals(""))
-				{
-					current_genre = movie_genre;
-				}
+				genre_list.add(movie_genre);
 				
 				String movie_star = rs.getString("Stars");
+				actor_list.add(movie_star);
+				
 				String movie_rating = rs.getString("ratings.rating");
 				String star_id = rs.getString("stars.id");
-				
-				movie_genreArray.add(movie_genre);
-				starIdArray.add(star_id);
-				movie_starArray.add(movie_star);
+				actor_idlist.add(star_id);
 				
 				while(rs.next())
 				{
-					String next_movieId = rs.getString("movies.id");
 					String next_genre = rs.getString("Genre");
+					String next_star = rs.getString("Stars");
+					String next_id = rs.getString("stars.id");
 					
-					if (current_movieId.equals(next_movieId))
+					if (!genre_list.contains(next_genre))
 					{
-						String next_star = rs.getString("Stars");
-						String next_id = rs.getString("stars.id");
-						
-						movie_starArray.add(next_star);
-						starIdArray.add(next_id);
-						if (!current_genre.equals(next_genre))
-						{	
-							current_genre = next_genre;
-							movie_genreArray.add(next_genre);
-						}	
+						genre_list.add(next_genre);
 					}
-					else
+					
+					if (!actor_list.contains(next_star))
 					{
-						current_movieId = next_movieId;
-						current_genre = next_genre;
-						rs.previous();
-						break;
+						actor_list.add(next_star);
 					}
+					
+					if (!actor_idlist.contains(next_id))
+					{
+						actor_idlist.add(next_id);
+					}
+				}
+				
+				for (int i = 0; i < genre_list.size(); i++)
+				{
+					movie_genreArray.add(genre_list.get(i));
+				}
+				
+				for (int i = 0; i < actor_list.size(); i++)
+				{
+					movie_starArray.add(actor_list.get(i));
+				}
+				
+				for (int i = 0; i < actor_idlist.size(); i++)
+				{
+					starIdArray.add(actor_idlist.get(i));
 				}
 				
 				String stars_num = Integer.toString(movie_starArray.size());

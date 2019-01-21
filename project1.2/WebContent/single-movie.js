@@ -55,11 +55,8 @@ function handleResult(resultData) {
     let movieTableBodyElement = jQuery("#single_movie_table_body");
 
     // Concatenate the html tags with resultData jsonObject to create table rows
-    for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    for (let i = 0; i < resultData.length; i++) {
         let rowHTML = "";
-        
-        if (movieId == resultData[i]["movie_id"])
-        {
         	rowHTML += "<tr>";
         	rowHTML += "<th>" + resultData[i]["movie_id"] + "</th>";
         	rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
@@ -69,7 +66,6 @@ function handleResult(resultData) {
         	rowHTML += createTheHtml(resultData[i]["star_id"],resultData[i]["movie_star"],resultData[i]["stars_num"]);
         	rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"; 
         	rowHTML += "</tr>";
-        }
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
     }
@@ -87,7 +83,7 @@ let movieId = getParameterByName('id');
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/movies", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/single-movie?id=" + movieId, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: handleResult
     	//(resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });
