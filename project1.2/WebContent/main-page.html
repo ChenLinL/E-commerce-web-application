@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>Main Page</title>
+<style>
+a{
+	color:white;
+}
+
+a:hover{
+	color:gold;
+}
+
+p{
+	color:white;
+	margin-left:40px;
+	font-size:18px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+body{
+	background-color:black;
+}
+
+ul{
+	list-style-type:none;
+	display:inline;
+	
+}
+
+li {
+	float:right;
+	margin-top: 80px;
+	border-right: 1px solid white;
+}
+
+li a {
+  display: block;
+  font-size:17px;
+  color: white;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+li:first-child{
+	border-right:none;
+}
+
+h1{
+	margin-left:30px;
+	margin-top:50px;
+	text-align:left;
+	text-transform:uppercase;
+	color: gold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 40px;
+	display: inline-block;
+}
+
+h2{
+	text-align:left;
+	color:white;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 20px;
+	margin-top:15px;
+	margin-left:30px;
+}
+
+hr { 
+  display: block;
+  border:1px solid white;
+} 
+
+</style>
+</head>
+<body>
+
+<h1>Fablix</h1>
+<ul>
+  <li><a href="#shopping-cart">Shopping Cart</a></li>
+  <li><a href="#search">Search</a></li>
+  <li><a href="#home">Home</a></li>
+</ul>
+<hr>
+<h2>Movie Genre:</h2> <p id="genre"></p>
+<h2>Movie Title:</h2> <p id="title"></p>
+
+<!-- include jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./main-page.js"></script>
+</body>
+</html>

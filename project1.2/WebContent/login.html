@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>Login Page</title>
+<style>
+
+body{
+	background-color:black;
+}
+
+h1{
+	margin-top:80px;
+	text-align:center;
+	text-transform:uppercase;
+	color: gold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 50px;
+}
+
+h2{
+	text-align:center;
+	color:white;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 30px;
+}
+
+input[type=text]
+{
+	width:200px;
+	padding:8px 10px;
+	margin: auto;
+	box-sizing:border-box;
+	border:2px solid gold;
+	border-radius:4px;
+}
+
+input[type=password]
+{
+	width:200px;
+	padding:8px 10px;
+	margin-left:6px;
+	box-sizing:border-box;
+	border:2px solid gold;
+	border-radius:4px;
+}
+
+input[type=submit]
+{
+	margin-top: 15px;
+	margin-left:46.5%;
+	display:block;
+	background-color:black;
+	color:white;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 25px;
+	padding:8px 12px;
+	box-sizing:border-box;
+	border:2px solid gold;
+}
+</style>
+</head>
+<body>
+
+<h1>Fablix</h1>
+<form id="login_form" method="post" action="#">
+    <h2><b>Username</b>
+    <input type="text" name="username"></h2>
+    <br>
+    <h2><b>Password</b>
+    <input type="password" name="password"></h2>
+    <br>
+    <input type="submit" value="Login">   
+</form>
+<div id="login_error_message"></div>
+
+<!-- include jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./login.js"></script>
+</body>
+</html>
