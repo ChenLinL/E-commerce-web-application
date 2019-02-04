@@ -49,10 +49,10 @@ public class MovieServlet extends HttpServlet {
 		String numRecord = request.getParameter("numRecord");
 		String sortType = request.getParameter("sortType");
 		String sortOrder = request.getParameter("sortOrder");
-		//String title_i = request.getParameter("title_i");
-		//String genre = request.getParameter("genre");
-		//System.out.println(star);
-		//System.out.println(firstRecord);
+		String title_i = request.getParameter("title_i");
+		String genre = request.getParameter("genre");
+		System.out.println(title_i);
+		System.out.println(genre);
 		//System.out.println(numRecord);
 		//System.out.println(sortType);
 		//System.out.println(sortOrder);
@@ -63,66 +63,97 @@ public class MovieServlet extends HttpServlet {
 			Statement movie_num = dbcon.createStatement();
 			String num_query = "";
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name, stars.name as Stars, stars.id, ratings.rating,genres.name as Genre "
-					       + "FROM";
+					       + "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
 			//System.out.println(query);
-			if(!title.isEmpty()) {
-				query += " (select movies.id, movies.title, movies.year, movies.director from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+"'%"+title+"%'";
-				num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+"'%"+title+"%'";
-				if(sortType.equals("rating")) {
-					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-				}
-				else {
-					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-					
-				}
+			if(!star.isEmpty()&& !star.equals("null")) {
+				query += ",stars_in_movies as s_i_m, stars as s";
+			}
+			if(!genre.isEmpty() && !genre.equals("null")) {
+				query += ",genres, genres_in_movies as g_i_m";
+			}
+			query += " where movies.id = ratings.movieId";
+			if(!title.isEmpty() && !title.equals("null")) {
+			    query += " and movies.title LIKE "+"'%"+title+"%'";
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//					
+//				}
 				//System.out.println("t");
 			}
-			if(!year.isEmpty()) {
-				query += "(select movies.id, movies.title, movies.year, movies.director from movies, ratings where movies.id = ratings.movieId and movies.year = "+year;
-				num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.year = "+year;
-				if(sortType.equals("rating")) {
-					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-					
-				}
-				else {
-					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-				
-				}
+			if(!year.isEmpty()&& !year.equals("null")) {
+				query += " and movies.year = "+year;
+	//			num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.year = "+year;
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//					
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				
+//				}
 				//System.out.println("y");
 			}
-			if(!director.isEmpty()) {
-				query += " (select movies.id, movies.title, movies.year, movies.director from movies, ratings where movies.id = ratings.movieId and movies.director = " +"'"+director+"'";
-				num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.director = " +"'"+director+"'";
-				if(sortType.equals("rating")) {
-					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-					
-				}
-				else {
-					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-				
-				}
+			if(!director.isEmpty()&& !director.equals("null")) {
+				query += " and movies.director = " +"'"+director+"'";
+				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.director = " +"'"+director+"'";
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//					
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				
+//				}
 				//System.out.println("d");
 			}
-			if(!star.isEmpty()) {
-				query += " (select movies.id, movies.title, movies.year, movies.director From movies, stars_in_movies as s_i_m, stars as s, ratings where movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
-				num_query += "select count(*) as movie_num From movies, stars_in_movies as s_i_m, stars as s, ratings where movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
-				if(sortType.equals("rating")) {
-					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-				}
-				else {
-					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-			
-				}
+			if(!star.isEmpty()&& !star.equals("null")) {
+				query += " and movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
+				//num_query += "select count(*) as movie_num From movies, stars_in_movies as s_i_m, stars as s, ratings where movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//			
+//				}
 				//System.out.println("s");
 			}
-			//if(!title_i.isEmpty()) {
-				//query += 
-			//}
+			System.out.println("s1");
+			if(!title_i.isEmpty()&& !title_i.equals("null")) {
+				query += " and movies.title LIKE "+"'"+title_i+"%'";
+				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+title_i+"%'";
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
+//				}
+			}
+			System.out.println("s2");
+			if(!genre.isEmpty() && !genre.equals("null")) {
+				query += " and genres.id = g_i_m.genreId and movies.id = g_i_m.movieId and genres.name = "+"'"+genre+"'";
+				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+title_i+"%'";
+//				if(sortType.equals("rating")) {
+//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+//				}
+//				else {
+//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
+//				}
+			}
+			if(sortType.equals("rating")) {
+				query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
+			}
+			else {
+				query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
+			}
 			query += ", ratings, genres, genres_in_movies, stars, stars_in_movies "
 				     + "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id" ;
-			System.out.println(num_query);
+			System.out.println(query);
 			ResultSet rs = statement.executeQuery(query);
-			ResultSet num_rs = movie_num.executeQuery(num_query);
+			//ResultSet num_rs = movie_num.executeQuery(num_query);
 			//System.out.println(num_rs.getInt(1));
 			//System.out.println(rs.getString(1));
 			//System.out.println(num_rs.getObject("movie_num"));
@@ -130,7 +161,7 @@ public class MovieServlet extends HttpServlet {
 			// Set the parameter represented by "?" in the query to the id we get from url,
 			// num 1 indicates the first "?" in the query
 			//statement.setString(1, title);
-			//System.out.print(statement);
+			System.out.print(rs);
 			//ResultSet rs = statement.executeQuery();
 			JsonArray jsonArray = new JsonArray();
 			
@@ -230,6 +261,8 @@ public class MovieServlet extends HttpServlet {
 				jsonObject.addProperty("mnumRecord", numRecord);
 				jsonObject.addProperty("msortType", sortType);
 				jsonObject.addProperty("msortOrder", sortOrder);
+				jsonObject.addProperty("mtitle_i", title_i);
+				jsonObject.addProperty("mgenre", genre);
 				//jsonObject.addProperty("num_movie", num_movie);
 				jsonArray.add(jsonObject);
 			}
@@ -237,7 +270,7 @@ public class MovieServlet extends HttpServlet {
 			
 			
 			out.write(jsonArray.toString());
-			//System.out.println(jsonArray.toString());
+			System.out.println(jsonArray.toString());
 			response.setStatus(200);
 			
 			rs.close();

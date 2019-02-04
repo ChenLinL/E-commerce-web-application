@@ -24,13 +24,13 @@ function getParameterByName(target) {
 }
 
 
-function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,n){
+function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 	result ='';
 	result += "<th><ul>";
 	num = Number(n);
 	for(i = 0; i<num; i++)
 	{
-		result += "<li><a href=single-star.html?id=" + l1[i] +"&title="+l3+"&year="+l4+"&director="+l5+"&star="+l6+"&firstRecord="+l7+"&numRecord="+l8+"&sortType="+l9+"&sortOrder="+l10+ '>'+ l2[i] + '</a></li>';
+		result += "<li><a href=single-star.html?id=" + l1[i] +"&title="+l3+"&year="+l4+"&director="+l5+"&star="+l6+"&firstRecord="+l7+"&numRecord="+l8+"&sortType="+l9+"&sortOrder="+l10+"&title_i="+l11+"&genre="+l12+ '>'+ l2[i] + '</a></li>';
 		//result += "<li><a href=single-star.html?id=" + l1[i]+ '>'+ l2[i] + '</a></li>';
 	}
 	result += "</ul></th>";
@@ -50,7 +50,7 @@ function handleResult(resultData) {
     console.log("handleResult: populating movie table from resultData");
     
     let backInfoElement = jQuery('#Back');
-    backInfoElement.append("<p><a href=index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+">Back to Search Result</p>");
+    backInfoElement.append("<p><a href=index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]+">Back to Search Result</p>");
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
@@ -65,7 +65,7 @@ function handleResult(resultData) {
         	rowHTML += "<th>" + resultData[i]["movie_year"] + "</th>";
         	rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         	rowHTML += "<th>" + resultData[i]["movie_genre"] + "</th>";
-        	rowHTML += createTheHtml(resultData[i]["star_id"],resultData[i]["movie_star"],resultData[0]['mtitle'],resultData[0]['myear'],resultData[0]['mdirector'],resultData[0]['mstar'],resultData[0]['mfirstRecord'],resultData[0]['mnumRecord'],resultData[0]['msortType'],resultData[0]['msortOrder'],resultData[i]["stars_num"]);
+        	rowHTML += createTheHtml(resultData[i]["star_id"],resultData[i]["movie_star"],resultData[0]['mtitle'],resultData[0]['myear'],resultData[0]['mdirector'],resultData[0]['mstar'],resultData[0]['mfirstRecord'],resultData[0]['mnumRecord'],resultData[0]['msortType'],resultData[0]['msortOrder'],resultData[0]["mtitle_i"],resultData[0]["mgenre"],resultData[i]["stars_num"]);
         	rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>"; 
         	rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page
@@ -88,10 +88,12 @@ let firstRecord = getParameterByName('firstRecord');
 let numRecord = getParameterByName('numRecord');
 let sortType = getParameterByName('sortType');
 let sortOrder = getParameterByName('sortOrder');
+let title_i = getParameterByName('title_i');
+let genre = getParameterByName('genre');
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/single-movie?id=" + movieId+"&title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/single-movie?id=" + movieId+"&title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
     //success: handleResult
     success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

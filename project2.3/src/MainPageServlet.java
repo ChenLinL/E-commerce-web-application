@@ -14,7 +14,9 @@ import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 /**
@@ -40,28 +42,37 @@ public class MainPageServlet extends HttpServlet {
 		try {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
-			
 			Statement statement = dbcon.createStatement();
 			
-			String query = "Select distinct genres.name From genres";
+			ArrayList<String> movie_genre = new ArrayList<String>();
+			movie_genre = get_genre(statement);
 			
-			ResultSet rs = statement.executeQuery(query);
+			ArrayList<String> movie_title = new ArrayList<String>();
+			movie_title = get_title(statement);
 			
 			JsonArray jsonArray = new JsonArray();
+			
 			JsonArray movie_genreArray = new JsonArray();
+			JsonArray movie_titleArray = new JsonArray();
+			
 			JsonObject jsonObject = new JsonObject();
 			
-			while (rs.next())
-			{	
-				String movie_genre = rs.getString("genres.name");
-				movie_genreArray.add(movie_genre);		
-				jsonObject.add("movie_genre", movie_genreArray);
+			for (String str : movie_genre)
+			{
+				movie_genreArray.add(str);
 			}
+			
+			for (String str: movie_title)
+			{
+				movie_titleArray.add(str);
+			}
+			
+			jsonObject.add("movie_genre", movie_genreArray);
+			jsonObject.add("movie_title", movie_titleArray);
 			jsonArray.add(jsonObject);
+			
 			out.write(jsonArray.toString());
 			response.setStatus(200);
-			
-			rs.close();
 			statement.close();
 			dbcon.close();
 			
@@ -74,5 +85,34 @@ public class MainPageServlet extends HttpServlet {
 		}
 		
 		out.close();
+	}
+	
+	public ArrayList<String> get_genre(Statement statement) throws SQLException
+	{
+		ArrayList<String> movie_genre = new ArrayList<String>();
+		String query = "Select distinct genres.name From genres";
+		ResultSet rs = statement.executeQuery(query);
+		while (rs.next())
+		{	
+			String genre = rs.getString("genres.name");
+			movie_genre.add(genre);		
+		}
+		rs.close();
+		return(movie_genre);
+	}
+	
+	public ArrayList<String> get_title(Statement statement) throws SQLException
+	{
+		ArrayList<String> movie_title = new ArrayList<String>();
+		String query = "Select distinct substring(movies.title, 1, 1) as Titles From movies "
+				+ "Where movies.title Regexp '^[a-z0-9]*$' Order by Titles";
+		ResultSet rs = statement.executeQuery(query);
+		while (rs.next())
+		{	
+			String title = rs.getString("Titles");
+			movie_title.add(title);		
+		}
+		rs.close();
+		return(movie_title);
 	}
 }
