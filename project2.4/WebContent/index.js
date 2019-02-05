@@ -18,6 +18,10 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function replaceSpace(target){
+	target = target.replace(/ /g,"_");
+	return target;
+}
 
 function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 	result ='';
@@ -33,10 +37,20 @@ function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 
 function handleMovieResult(resultData) {
 	
-	 
     let searchInfoElement = jQuery('#Search');
     searchInfoElement.append("<p><a href=search.html> Search </p>");
-	// Populate the movie table
+    
+    let sortTypeInfoElement = jQuery('#SortType');
+    sortTypeInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortType</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=rating"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
++'>Rating</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=title"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+    +'>Title</a></div></div>');
+    let sortOrderInfoElement = jQuery('#SortOrder');
+    sortOrderInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortOrder</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+    		  +'>DESC</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=ASC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+	+'>ASC</a></div></div>');
+    // Populate the movie table
+    
+    "index.html?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     // Find the empty table body by id "movie_table_body"
     let movieTableBodyElement = jQuery("#movie_table_body");
     console.log(resultData[0]["mgenre"]);
@@ -58,12 +72,35 @@ function handleMovieResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_genre"] + "</th>";
         rowHTML += createTheHtml(resultData[i]["star_id"],resultData[i]["movie_star"],resultData[i]["mtitle"],resultData[i]['myear'],resultData[i]['mdirector'],resultData[i]['mstar'],resultData[i]['mfirstRecord'],resultData[i]['mnumRecord'],resultData[i]['msortType'],resultData[i]['msortOrder'],resultData[i]["mtitle_i"],resultData[i]["mgenre"],resultData[i]["stars_num"]);
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        rowHTML += "<th>" 
+        	+ "<a href=shopingCart.html?"+"item="+ replaceSpace(resultData[i]['movie_title'])+"&id="+resultData[i]['movie_id']+"&func=add>"
+        	+ "add to the Shopping cart" + 
+        	"</a>" + 
+        	"</th>";
+ 
         rowHTML += "</tr>";
         
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
+        //$("#infor_table").submit((event) => submitSearchForm(event));
     }
 }
+//var info = document.getElementById("infor_table").value;
+//function submitSearchForm(formSubmitEvent) {
+//    console.log("submit search form");
+//    /**
+//     * When users click the submit button, the browser will not direct
+//     * users to the url defined in HTML form. Instead, it will call this
+//     * event handler when the event is triggered.
+//     */
+//    formSubmitEvent.preventDefault();
+//    $.post(
+//        "api/movies?title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&title_i="+title_i+"&genre="+genre,
+//        // Serialize the login form to the data sent by POST request
+//        $("#search_form").serialize(),
+//        (resultDataString) => handleMovieResult(resultDataString)
+//    );
+//}
 let mTitle = getParameterByName('title');
 let mYear = getParameterByName('year');
 let mDirector = getParameterByName('director');
@@ -82,3 +119,4 @@ jQuery.ajax({
     //success:handleMovieResult
     success: (resultData) => handleMovieResult(resultData)// Setting callback function to handle data returned successfully by the StarsServlet
 });
+//$("#infor_table").submit((event) => submitSearchForm(event));

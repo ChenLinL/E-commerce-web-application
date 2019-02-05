@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	<title>Fablix</title>
+</head>
+<body>
+
+<h1>Movie</h1>
+<h2 id="Search"></h2>
+<ul>
+	<li><h3 id="SortType"></h3></li>
+	<li><h3 id="SortOrder"></h3></li>
+</ul>
+<table id=movie_table class="table table-striped">
+	<thead>
+    <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Director</th>
+        <th>List of Genres</th>
+        <th>List of Stars</th>
+        <th>Rating</th>
+        <th></th>
+    </tr>
+	</thead>
+	<tbody id=movie_table_body></tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script src="index.js"></script>
+
+</body>
+
+<footer>
+	
+	
+	<ul class = "pagination">
+		<li><a href = "#">&laquo;</a></li>
+		<li class = "aactive"><a href = "#">1</a></li>
+		<li><a href = "#">2</a></li>
+		<li><a href = "#">3</a></li>
+		<li><a href = "#">&raquo;</a></li>
+	</ul>
+</footer>
+</html>
