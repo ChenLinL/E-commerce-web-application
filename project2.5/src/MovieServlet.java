@@ -37,7 +37,7 @@ public class MovieServlet extends HttpServlet {
 		response.setContentType("application/json");
 		
 		PrintWriter out = response.getWriter();
-		//System.out.println(request.getRequestURL());
+		System.out.println(request.getRequestURL());
 		String title = request.getParameter("title");
 		//System.out.println(title);
 		String year = request.getParameter("year");
@@ -51,7 +51,9 @@ public class MovieServlet extends HttpServlet {
 		String sortOrder = request.getParameter("sortOrder");
 		String title_i = request.getParameter("title_i");
 		String genre = request.getParameter("genre");
-		System.out.println(title_i);
+		//String m_num = request.getParameter("m_num");
+		//System.out.println("m_num");
+		//System.out.println(m_num);
 		System.out.println(genre);
 		//System.out.println(numRecord);
 		//System.out.println(sortType);
@@ -60,8 +62,8 @@ public class MovieServlet extends HttpServlet {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
 			Statement statement = dbcon.createStatement();
-			Statement movie_num = dbcon.createStatement();
-			String num_query = "";
+			//Statement movie_num = dbcon.createStatement();
+			//String num_query = "";
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name, stars.name as Stars, stars.id, ratings.rating,genres.name as Genre "
 					       + "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
 			//System.out.println(query);
@@ -74,52 +76,15 @@ public class MovieServlet extends HttpServlet {
 			query += " where movies.id = ratings.movieId";
 			if(!title.isEmpty() && !title.equals("null")) {
 			    query += " and movies.title LIKE "+"'%"+title+"%'";
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//					
-//				}
-				//System.out.println("t");
 			}
 			if(!year.isEmpty()&& !year.equals("null")) {
 				query += " and movies.year = "+year;
-	//			num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.year = "+year;
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//					
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				
-//				}
-				//System.out.println("y");
 			}
 			if(!director.isEmpty()&& !director.equals("null")) {
 				query += " and movies.director = " +"'"+director+"'";
-				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.director = " +"'"+director+"'";
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//					
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				
-//				}
-				//System.out.println("d");
 			}
 			if(!star.isEmpty()&& !star.equals("null")) {
 				query += " and movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
-				//num_query += "select count(*) as movie_num From movies, stars_in_movies as s_i_m, stars as s, ratings where movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//			
-//				}
-				//System.out.println("s");
 			}
 			System.out.println("s1");
 			if(!title_i.isEmpty()&& !title_i.equals("null")) {
@@ -263,6 +228,7 @@ public class MovieServlet extends HttpServlet {
 				jsonObject.addProperty("msortOrder", sortOrder);
 				jsonObject.addProperty("mtitle_i", title_i);
 				jsonObject.addProperty("mgenre", genre);
+				//jsonObject.addProperty("m_num", m_num);
 				//jsonObject.addProperty("num_movie", num_movie);
 				jsonArray.add(jsonObject);
 			}

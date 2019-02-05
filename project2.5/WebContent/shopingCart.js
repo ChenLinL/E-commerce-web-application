@@ -108,8 +108,7 @@ function handleCartArray(resultDataJson) {
 //    success: (resultDataString) => handleSessionData(resultDataString)
 //});
 
-// Bind the submit action of the form to a event handler function
-//$("#cart").submit((event) => handleCartInfo(event));
+
 let func = getParameterByName('func');
 let item = getParameterByName('item');
 let Id = getParameterByName('id');

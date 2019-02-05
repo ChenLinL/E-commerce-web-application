@@ -8,23 +8,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
           
-	<title>Single Star</title>
+	<title>Single Movie</title>
 
 </head>
 <body>
-<h1>Single Star Page</h1>
-<h2 id="Back"></h2>
+<h1>Single Movie Page</h1>
+<ul>
+	<li><h2 id="Back"></h2></li>
+	<li><h3 id="ShopingCart"></h3></li>
+</ul>
 
-<table id=single_star_table class="table table-striped">
+<h3 id="movie_info"></h3>
+<table id=single_movie_table class="table table-striped">
     <thead>
     <tr>
-        <th>Star name</th>
-        <th>Star Date of Birth</th>
-        <th>List of movies</th>
+        <th>Movie ID</th>
+        <th>Movie Title</th>
+        <th>Release Year</th>
+        <th>Director</th>
+        <th>List of Genres</th>
+        <th>List of Stars</th>
+        <th>Rating</th>
+        <th></th>
+        <th>
     </tr>
     </thead>
 
-    <tbody id=single_star_table_body></tbody>
+    <tbody id=single_movie_table_body></tbody>
 </table>
 
 <!-- Load jQuery and Bootstrap JS -->
@@ -32,6 +42,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<script src="single-star.js"></script>
+<script src="single-movie.js"></script>
 </body>
 </html>

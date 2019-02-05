@@ -48,7 +48,7 @@ input[type=director]
 {
 	width:200px;
 	padding:8px 10px;
-	margin-left:6px;
+	margin: auto;
 	box-sizing:border-box;
 	border:2px solid gold;
 	border-radius:4px;
@@ -57,7 +57,7 @@ input[type=star]
 {
 	width:200px;
 	padding:8px 10px;
-	margin-left:6px;
+	margin: auto;
 	box-sizing:border-box;
 	border:2px solid gold;
 	border-radius:4px;
@@ -83,18 +83,18 @@ input[type=submit]
 <h2>Search</h2>
 <!-- Set the method to POST to avoid showing the username/password in the URL
      The default action is disabled to allow your own implementation. -->
-<form id="search_form" method="post" action="">
-    <h3><b>title</b></h3>
-    <input type="text" placeholder="Enter title" name="title">
+<form id="search_form" method="post" action="#">
+    <h3><b>title</b>
+    <input type="text"  value = "title" name="title"></h3>
     <br>
-    <h3><b>year</b></h3l>
-    <input type="text" placeholder="Enter year" name="year">
+    <h3><b>year</b>
+    <input type="text"   value = "year" name="year"></h3>
     <br>
-    <h3><b>director</b></h3>
-    <input type="text" placeholder="Enter director" name="director">
+    <h3><b>director</b>
+    <input type="text"   value = "director" name="director"></h3>
     <br>
-    <h3><b>star</b></h3>
-    <input type="text" placeholder="Enter star" name="star">
+    <h3><b>star</b>
+    <input type="text"  value = "star" name="star"></h3>
     <br>
     <input type="submit" value="Search">
 </form>
