@@ -93,7 +93,9 @@ public class resultPageServlet extends HttpServlet {
         	     
         	     //previousItems.clear();
         	 }
-        	 //previousItems.clear();
+        	previousItems.clear();
+        	previousItems = new HashMap<String,Map.Entry<String, Integer>>();
+     		session.setAttribute("previousItems", previousItems);
         	out.write(jsonObject.toString());
  			response.setStatus(200);
  			
