@@ -1,0 +1,145 @@
+<!-- This page will be seen if you logged in -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+<style>
+#grad1 {
+    background-image: -webkit-linear-gradient(left, transparent 0%, #8C8C8C 15%, #8C8C8C 85%, transparent 100%); 
+    background-image: linear-gradient(left, transparent 0%, #8C8C8C 15%, #8C8C8C 85%, transparent 100%); 
+    height: 3px;
+}
+
+table
+{
+	background: black;
+	
+}
+.first{
+	width:30%;
+	float:left;
+}
+
+.second{
+	width:60%;
+	float:right;
+	margin-right:10px;
+	border-left:2px solid gold;
+	padding:50px;
+}
+
+a{
+	color:white;
+}
+
+a:hover{
+	color:gold;
+}
+
+th, td, tr{
+    padding: 0 100px;
+	color:white;
+	font-size:20px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+p{
+	color:white;
+	margin-left:47px;
+	font-size:18px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	line-height: 200%;
+	text-align:left;
+}
+
+body{
+	background-color:black;
+}
+
+ul{
+	list-style-type:none;
+	display:inline;
+	
+}
+
+li {
+	float:right;
+	margin-top: 80px;
+	border-right: 1px solid white;
+}
+
+li a {
+  display: block;
+  font-size:17px;
+  color: white;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+li:first-child{
+	border-right:none;
+}
+
+h1{
+	margin-left:30px;
+	margin-top:50px;
+	text-align:left;
+	text-transform:uppercase;
+	color: gold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 40px;
+	display: inline-block;
+}
+
+h2{
+	text-align:left;
+	color:white;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 20px;
+	margin-left:30px;
+	display:inline-block;
+}
+
+hr { 
+  display: block;
+  border:1px solid white;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Fablix</h1>
+<ul>
+  <li><a href="#shopping-cart" onclick="window.location.href='shopingCart.html'">Shopping Cart</a></li>
+  <li><a href="#search" onclick="window.location.href='search.html'">Search</a></li>
+  <li><a href="#home" onclick="window.location.href='main-page.html'">Home</a></li>
+</ul>
+<hr>
+
+<h1 id="Back"></h1>
+<div id="grad1"></div>
+<table id=shoppingTable class="table table-striped">
+	<thead>
+    <tr>
+        <th>Movie List</th>
+        <th></th>
+        <th>Number of Purchase</th>
+        
+        <th></th>
+        <th></th>
+    </tr>
+    
+	</thead>
+	<tbody id=shopping_table_body></tbody>
+</table>
+<div id="grad1"></div>
+<h2 id="CheckOut"></h2>
+
+<!-- include your own JS file -->
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script type='text/javascript' src='shopingCart.js'></script>
+</body>
+</html>
