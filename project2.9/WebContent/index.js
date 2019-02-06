@@ -2,6 +2,7 @@
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
+
 function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
@@ -22,6 +23,20 @@ function replaceSpace(target){
 	target = target.replace(/ /g,"_");
 	return target;
 }
+
+function handlefuntion()
+{
+	var userinput = document.getElementById('input').value;
+	console.log(userinput);
+	if (userinput < 0)
+		alert("Quantity should be >= 0");
+	else
+	{
+		console.log("GO TO ADD");
+		return true;
+	}
+}
+
 
 function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 	result ='';
@@ -146,14 +161,21 @@ function handleMovieResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_genre"] + "</th>";
         rowHTML += createTheHtml(resultData[i]["star_id"],resultData[i]["movie_star"],resultData[i]["mtitle"],resultData[i]['myear'],resultData[i]['mdirector'],resultData[i]['mstar'],resultData[i]['mfirstRecord'],resultData[i]['mnumRecord'],resultData[i]['msortType'],resultData[i]['msortOrder'],resultData[i]["mtitle_i"],resultData[i]["mgenre"],resultData[i]["stars_num"]);
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        //rowHTML += "<th>" + "<input type=text name=quantity id=input>" + "</th>";
+       //rowHTML += "<th>" + "<button onclick=handlefuntion()>Add to Cart</button>" + "/<th>";
+        
+       
+        	
+        	//window.location.replace("shopingCart.html?"+"item="+ replaceSpace(resultData[i]['movie_title'])+"&id="+resultData[i]['movie_id']+"&func=add");
+        
         rowHTML += "<th>" 
-        	+ "<a href=shopingCart.html?"+"item="+ replaceSpace(resultData[i]['movie_title'])+"&id="+resultData[i]['movie_id']+"&func=add>"
+        	+ "<a href=shopingCart.html?"+"item="+ replaceSpace(resultData[i]['movie_title'])+"&id="+resultData[i]['movie_id']+"&func=add>"      	
         	+ "add to the Shopping cart" + 
         	"</a>" + 
         	"</th>";
- 
+ 		
         rowHTML += "</tr>";
-        
+        console.log(rowHTML);
         // Append the row created to the table body, which will refresh the page
         movieTableBodyElement.append(rowHTML);
         //$("#infor_table").submit((event) => submitSearchForm(event));
@@ -195,6 +217,6 @@ jQuery.ajax({
     method: "GET", // Setting request method
     url: "api/movies?title="+mTitle+"&year="+mYear+"&num="+num+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
     //success:handleMovieResult
-    success: (resultData) => handleMovieResult(resultData)// Setting callback function to handle data returned successfully by the StarsServlet
+    success: (resultData) => handleMovieResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
 //$("#infor_table").submit((event) => submitSearchForm(event));

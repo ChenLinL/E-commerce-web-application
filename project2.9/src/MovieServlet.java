@@ -257,4 +257,9 @@ public class MovieServlet extends HttpServlet {
 		
 		out.close();
 	}
+	
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 String quantity = request.getParameter("quantity");
+		 System.out.print(quantity);
+	 }
 }
