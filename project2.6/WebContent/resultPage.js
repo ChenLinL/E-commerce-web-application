@@ -24,16 +24,31 @@ function getParameterByName(target) {
  * Handles the data returned by the API, read the jsonObject and populate data into html elements
  * @param resultData jsonObject
  */
-//function handleResult(resultData) {
-//    // populate the movie info h3
-//    // find the empty h3 body by id "movie_info"
-//
-//    console.log("handleResult: populating movie table from resultData");
-//    
-//    let backInfoElement = jQuery('#Back');
-//    backInfoElement.append("<p><a href=main-page.html"+">Back to Search Result</a></p>");
-//
-//}
+function handleResult(resultData) {
+    // populate the movie info h3
+    // find the empty h3 body by id "movie_info"
+
+    console.log("handleResult: populating movie table from resultData");
+    
+    let resultTableBodyElement = jQuery("#result_table_body");
+    console.log(1);
+	for (let i = 0; i < resultData["key"].length; i++) {
+    	
+        //rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
+        let rowHTML = "";
+        rowHTML += "<tr>";
+        rowHTML += "<th>"+ resultData["id"][i]+"</th>";
+        rowHTML += "<th></th>";
+        rowHTML += "<th>"+ resultData["key"][i]+"</th>";
+        rowHTML += "<th></th>";
+        rowHTML += "<th>" + resultData["value"][i] + "</th>";
+        rowHTML += "</tr>";
+        console.log(rowHTML);
+        resultTableBodyElement.append(rowHTML);
+	}
+	console.log(2);
+
+}
 
 /**
  * Once this .js is loaded, following scripts will be executed by the browser\
@@ -47,6 +62,6 @@ backInfoElement.append("<p><a href=main-page.html"+">Back to Main Page</a></p>")
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
-    url: "api/resultPage?c_id="+c_id
-    //success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
+    url: "api/resultPage?c_id="+c_id,
+    success: (resultData) => handleResult(resultData) // Setting callback function to handle data returned successfully by the SingleStarServlet
 });

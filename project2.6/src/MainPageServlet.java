@@ -49,7 +49,8 @@ public class MainPageServlet extends HttpServlet {
 			
 			ArrayList<String> movie_title = new ArrayList<String>();
 			movie_title = get_title(statement);
-			
+//			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name, stars.name as Stars, stars.id, ratings.rating,genres.name as Genre "
+//				       + "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
 			JsonArray jsonArray = new JsonArray();
 			
 			JsonArray movie_genreArray = new JsonArray();

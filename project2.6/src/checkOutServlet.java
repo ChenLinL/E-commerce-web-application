@@ -38,16 +38,17 @@ public class checkOutServlet extends HttpServlet {
     	
     	try {
 			Connection dbcon = dataSource.getConnection();
-			
+			System.out.println("check");
 			String id = request.getParameter("id");
 	        String first = request.getParameter("firstName");
 	        String last = request.getParameter("lastName");
 	        String date_r = request.getParameter("date");
-	        Date date = Date.valueOf(date_r);
 	        System.out.println(id);
 	        System.out.println(first);
 	        System.out.println(last);
 	        System.out.println(date_r);
+	        Date date = Date.valueOf(date_r);
+	        System.out.println(date);
 	        System.out.println(date.toString());
 	        String query = "Select cus.id from creditcards as c, customers as cus where c.id = cus.ccId and c.id =? and c.firstName=? and c.lastName=? and c.expiration=?";
 	        

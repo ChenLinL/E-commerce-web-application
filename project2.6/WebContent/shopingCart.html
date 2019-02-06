@@ -3,12 +3,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <style>
+
+	a {
+   		display: block;
+    	width: 100%;
+    	line-height: 2em;
+    	text-align: left;
+    	text-decoration: none;
+    	border-radius: 5px;
+	}
+
+	a:hover {
+    	color: red;
+    	background: #eff;
+	}
+	</style>
     <title>Shopping Cart</title>
 </head>
 <body>
 Shopping Cart
-<h1 id="Back"></h1>
-<h2 id="CheckOut"></h2>
+<h2 id="mainPage"></h2>
 <table id=shoppingTable class="table table-striped">
 	<thead>
     <tr>
@@ -21,7 +36,7 @@ Shopping Cart
 	</thead>
 	<tbody id=shopping_table_body></tbody>
 </table>
-
+<div id="CheckOut"></div>
 <!-- include your own JS file -->
 <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
 <script type='text/javascript' src='shopingCart.js'></script>

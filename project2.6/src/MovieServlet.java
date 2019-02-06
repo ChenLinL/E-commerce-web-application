@@ -51,7 +51,7 @@ public class MovieServlet extends HttpServlet {
 		String sortOrder = request.getParameter("sortOrder");
 		String title_i = request.getParameter("title_i");
 		String genre = request.getParameter("genre");
-		//String m_num = request.getParameter("m_num");
+		String num = request.getParameter("num");
 		//System.out.println("m_num");
 		//System.out.println(m_num);
 		System.out.println(genre);
@@ -62,26 +62,32 @@ public class MovieServlet extends HttpServlet {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
 			Statement statement = dbcon.createStatement();
-			//Statement movie_num = dbcon.createStatement();
+			Statement movie_num = dbcon.createStatement();
 			//String num_query = "";
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name, stars.name as Stars, stars.id, ratings.rating,genres.name as Genre "
 					       + "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
+			String n_query = "SELECT count(*) as num "+
+				       "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
 			//System.out.println(query);
 			if(!star.isEmpty()&& !star.equals("null")) {
 				query += ",stars_in_movies as s_i_m, stars as s";
+				//n_query += ",stars_in_movies as s_i_m, stars as s";
 			}
 			if(!genre.isEmpty() && !genre.equals("null")) {
 				query += ",genres, genres_in_movies as g_i_m";
+				//n_query += ",genres, genres_in_movies as g_i_m";
 			}
 			query += " where movies.id = ratings.movieId";
+			n_query +=" where movies.id = ratings.movieId";
 			if(!title.isEmpty() && !title.equals("null")) {
 			    query += " and movies.title LIKE "+"'%"+title+"%'";
+			    n_query += " and movies.title LIKE "+"'%"+title+"%'";
 			}
 			if(!year.isEmpty()&& !year.equals("null")) {
-				query += " and movies.year = "+year;
+				query += " and movies.year LIKE "+"'%"+year+"%'";
 			}
 			if(!director.isEmpty()&& !director.equals("null")) {
-				query += " and movies.director = " +"'"+director+"'";
+				query += " and movies.director LIKE" +"'%"+director+"%'";
 			}
 			if(!star.isEmpty()&& !star.equals("null")) {
 				query += " and movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
@@ -89,24 +95,10 @@ public class MovieServlet extends HttpServlet {
 			System.out.println("s1");
 			if(!title_i.isEmpty()&& !title_i.equals("null")) {
 				query += " and movies.title LIKE "+"'"+title_i+"%'";
-				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+title_i+"%'";
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
-//				}
 			}
 			System.out.println("s2");
 			if(!genre.isEmpty() && !genre.equals("null")) {
 				query += " and genres.id = g_i_m.genreId and movies.id = g_i_m.movieId and genres.name = "+"'"+genre+"'";
-				//num_query += "select count(*) as movie_num from movies, ratings where movies.id = ratings.movieId and movies.title LIKE "+title_i+"%'";
-//				if(sortType.equals("rating")) {
-//					query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
-//				}
-//				else {
-//					query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
-//				}
 			}
 			if(sortType.equals("rating")) {
 				query += " order by ratings.rating "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";
@@ -114,10 +106,12 @@ public class MovieServlet extends HttpServlet {
 			else {
 				query += " order by movies.title "+sortOrder+" LIMIT "+ numRecord + " OFFSET "+ firstRecord+" ) movies";	
 			}
+			n_query +=")movies";
 			query += ", ratings, genres, genres_in_movies, stars, stars_in_movies "
 				     + "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id" ;
-			System.out.println(query);
+			System.out.println(n_query);
 			ResultSet rs = statement.executeQuery(query);
+			ResultSet n_rs = movie_num.executeQuery(n_query);
 			//ResultSet num_rs = movie_num.executeQuery(num_query);
 			//System.out.println(num_rs.getInt(1));
 			//System.out.println(rs.getString(1));
@@ -126,14 +120,24 @@ public class MovieServlet extends HttpServlet {
 			// Set the parameter represented by "?" in the query to the id we get from url,
 			// num 1 indicates the first "?" in the query
 			//statement.setString(1, title);
-			System.out.print(rs);
+			//System.out.print(rs);
 			//ResultSet rs = statement.executeQuery();
 			JsonArray jsonArray = new JsonArray();
 			
 			String current_movieId = "";
 			String current_genre = "";
 			String check_genre = "";
-			
+			System.out.print("Num1");
+			while (n_rs.next()) {
+				System.out.print("Num1");
+				System.out.print(rs.toString());
+				int n_num = n_rs.getInt("num");
+				String nnum = Integer.toString(n_num);
+				System.out.print("Num");
+				System.out.print(nnum);
+				num = nnum;
+			}
+			System.out.print("Num2");
 			while (rs.next())
 			{	
 				String movie_id = rs.getString("movies.id");
@@ -228,7 +232,7 @@ public class MovieServlet extends HttpServlet {
 				jsonObject.addProperty("msortOrder", sortOrder);
 				jsonObject.addProperty("mtitle_i", title_i);
 				jsonObject.addProperty("mgenre", genre);
-				//jsonObject.addProperty("m_num", m_num);
+				jsonObject.addProperty("num", num);
 				//jsonObject.addProperty("num_movie", num_movie);
 				jsonArray.add(jsonObject);
 			}

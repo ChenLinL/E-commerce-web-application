@@ -53,7 +53,7 @@ public class resultPageServlet extends HttpServlet {
         // get the previous items in a ArrayList
         //ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
          HashMap<String, Map.Entry<String, Integer>>previousItems = (HashMap<String,Map.Entry<String, Integer>>) session.getAttribute("previousItems");
-      
+         JsonObject jsonObject = new JsonObject();
          try {
         	 Connection dbcon = dataSource.getConnection();
         	 synchronized (previousItems) {
@@ -75,12 +75,31 @@ public class resultPageServlet extends HttpServlet {
         			 statement.executeUpdate();
         			 
         		 }
+        
+        	     JsonArray key = new JsonArray();
+        	     JsonArray value = new JsonArray();
+        	     JsonArray id_l = new JsonArray();
+        	     for(Map.Entry<String, Map.Entry<String, Integer>> m : previousItems.entrySet()) {
+        	    	 key.add(m.getKey());
+        	    	 System.out.println(m.getKey());
+        	    	 value.add(m.getValue().getValue());
+        	    	 System.out.println(m.getValue().getValue());
+        	    	 id_l.add(m.getValue().getKey());
+        	    	 System.out.println(m.getValue().getKey());
+        	     }
+        	     jsonObject.add("id",key);
+        	     jsonObject.add("value",value);
+        	     jsonObject.add("key", id_l);
+        	     
+        	     //previousItems.clear();
         	 }
         	 //previousItems.clear();
-        		 
+        	out.write(jsonObject.toString());
+ 			response.setStatus(200);
+ 			
+ 			dbcon.close();
  		}
         catch (Exception e) {
-        	JsonObject jsonObject = new JsonObject();
         	jsonObject.addProperty("errorMessage", e.getMessage());
         	out.write(jsonObject.toString());
         				

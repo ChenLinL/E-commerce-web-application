@@ -44,18 +44,15 @@ function handleCartArray(resultDataJson) {
 	console.log(resultDataJson["value"]);
     
     // change it to html list
-	 let backInfoElement = jQuery('#Back');
-	 backInfoElement.append("<p><a href=main-page.html>Back to mainPage</a></p>");
-	 
-	 let checkOutInfoElement = jQuery('#CheckOut');
-	 checkOutInfoElement.append("<p><a href=checkOut.html>Check Out</a></p>");
-	let shoppingTableBodyElement = jQuery("#shopping_table_body");
+	let mainPageInfoElement = jQuery('#mainPage');
+	mainPageInfoElement.append("<p><a href=main-page.html>Back to Main Page</a></p>");
 //    let res = "<ul>";
 //    for(let i = 0; i < resultDataJson["key"].length; i++) {
 //        // each item will be in a bullet point
 //        res += "<li>" + resultDataJson["key"][i] +"num:"+resultDataJson["value"][i]+ "</li>";   
 //    }
 //    res += "</ul>";
+	let shoppingTableBodyElement = jQuery("#shopping_table_body");
 	for (let i = 0; i < resultDataJson["key"].length; i++) {
     	
         //rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
@@ -76,6 +73,10 @@ function handleCartArray(resultDataJson) {
         console.log(rowHTML);
         // Append the row created to the table body, which will refresh the page
         shoppingTableBodyElement.append(rowHTML);
+	}
+	if(resultDataJson["key"].length > 0){
+		let checkOutInfoElement = jQuery('#CheckOut');
+		checkOutInfoElement.append("<p><a href=checkOut.html>Check Out</a></p>");
 	}
     // clear the old array and show the new array in the frontend
 //    $("#item_list").html("");
@@ -112,11 +113,10 @@ function handleCartArray(resultDataJson) {
 let func = getParameterByName('func');
 let item = getParameterByName('item');
 let Id = getParameterByName('id');
+
 jQuery.ajax({
-    dataType: "json",  // Setting return data type
-    method: "GET",// Setting request method
-    //url: "api/single-movie?id=" + movieId+"&title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
-    //success: handleResult
-    url: "api/shopingCart?item="+item+"&func="+func+"&id="+Id,
-    success: (resultDataString) => handleCartArray(resultDataString)// Setting callback function to handle data returned successfully by the SingleStarServlet
+	dataType: "json",  // Setting return data type
+	method: "GET",// Setting request method
+	url: "api/shopingCart?item="+item+"&func="+func+"&id="+Id,
+	success: (resultDataString) => handleCartArray(resultDataString)// Setting callback function to handle data returned successfully by the SingleStarServlet
 });

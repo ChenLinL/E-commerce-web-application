@@ -35,19 +35,25 @@ function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 	return result;
 }
 
+function test(){
+	console.log("work");
+}
+
 function handleMovieResult(resultData) {
 	
     let searchInfoElement = jQuery('#Search');
     searchInfoElement.append("<p><a href=search.html> Search</a></p>");
+    let mainPageElement = jQuery('#mainPage');
+    mainPageElement.append("<p><a href=main-page.html> Back to main page</a></p>");
     let scInfoElement = jQuery('#ShopingCart');
-    scInfoElement.append("<p><a href=shopingCart.html> ShopingCart</a></p>");
+    scInfoElement.append("<input type='button' value='Check Out' onclick=window.location=shopingCart.html>");
     let sortTypeInfoElement = jQuery('#SortType');
     sortTypeInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortType</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=rating"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
-+'>Rating</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=title"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
++'>Rating</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&num="+resultData[0]['num']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=title"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     +'>Title</a></div></div>');
     let sortOrderInfoElement = jQuery('#SortOrder');
     sortOrderInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortOrder</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
-    		  +'>DESC</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=ASC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+    		  +'>DESC</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&num="+resultData[0]['num']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=ASC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
 	+'>ASC</a></div></div>');
     let ipInfoElement = jQuery('#items_per_page');
     
@@ -55,7 +61,7 @@ function handleMovieResult(resultData) {
     for(let i =1; i < 100;++i){
     jq+='<a class="dropdown-item" href=index.html?title='
     		+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+
-    		"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+
+    		"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&num="+resultData[0]['num']+"&numRecord="+
     		i+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     		  +">"+i+"</a>";
     }
@@ -64,11 +70,65 @@ function handleMovieResult(resultData) {
     ipInfoElement.append(jq);
     // Populate the movie table
    
-    "index.html?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+    //"index.html?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     // Find the empty table body by id "movie_table_body"
     let movieTableBodyElement = jQuery("#movie_table_body");
     console.log(resultData[0]["mgenre"]);
     //Iterate through resultData, no more than 20 entries
+    var total_movie = parseInt(resultData[0]["num"]);
+    var start =  parseInt(resultData[0]["mfirstRecord"]);
+    var range =  parseInt(resultData[0]["mnumRecord"]);
+    var total_pages = Math.round(total_movie/range);
+    var next = 0;
+    var prev = 0;
+    if((start + range) >= total_pages){
+    	next = total_movie - range;
+    }
+    else{
+    	next = start + range;
+    }
+    if ((start - range)< 0){
+    	prev = 0
+    }
+    else{
+    	prev = start - range;
+    }
+    console.log(total_movie);
+    console.log(start);
+    console.log(range);
+    console.log(total_pages);
+    console.log(next);
+    console.log(prev);
+    let pignaElement = jQuery("#pigna");
+    let p ='<nav aria-label="Page navigation example">'+
+      '<ul class="pagination">'+
+      '<li class="page-item"><a class="page-link" href='+
+      "index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
+      "&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+
+      prev+"&numRecord="+range+"&sortType="+resultData[0]['msortType']+
+      "&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]
+      +">Previous</a></li>";
+//    for(var j =1; j<=total_pages; j++){
+//    	var mp = start+j;
+//    	console.log(mp);
+//    	p += '<li class="page-item"><a class="page-link" href='+
+//    	"index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
+//        "&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+
+//        mp+"&numRecord="+range+"&sortType="+resultData[0]['msortType']+
+//        "&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]	
+//    	+">"+j+"</a></li>";
+//    }
+   
+     p+='<li class="page-item"><a class="page-link" href='+
+     "index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
+     "&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+
+     next+"&numRecord="+range+"&sortType="+resultData[0]['msortType']+
+     "&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]
+     +">Next</a></li>"
+     +"</ul>"+
+     "</nav>";
+     console.log(p);
+     pignaElement.append(p);
     for (let i = 0; i < resultData.length; i++) {
     	
     	// Concatenate the html tags with resultData jsonObject
@@ -129,10 +189,11 @@ let sortType = getParameterByName('sortType');
 let sortOrder = getParameterByName('sortOrder');
 let title_i = getParameterByName('title_i');
 let genre = getParameterByName('genre');
+let num = getParameterByName('num');
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/movies?title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/movies?title="+mTitle+"&year="+mYear+"&num="+num+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
     //success:handleMovieResult
     success: (resultData) => handleMovieResult(resultData)// Setting callback function to handle data returned successfully by the StarsServlet
 });

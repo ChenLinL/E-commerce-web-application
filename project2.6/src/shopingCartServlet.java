@@ -35,14 +35,20 @@ public class shopingCartServlet extends HttpServlet {
         String func = request.getParameter("func");
         String id = request.getParameter("item");
 
-        System.out.println(id);
+        //System.out.println(id);
+        //System.out.println(func);
+        //System.out.println(item);
         HttpSession session = request.getSession();
 
         // get the previous items in a ArrayList
         //ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
-         HashMap<String, Map.Entry<String, Integer>>previousItems = (HashMap<String,Map.Entry<String, Integer>>) session.getAttribute("previousItems");
-         JsonArray mId = new JsonArray();
+        HashMap<String, Map.Entry<String, Integer>>previousItems = (HashMap<String,Map.Entry<String, Integer>>) session.getAttribute("previousItems");
+        JsonArray mId = new JsonArray();
+        Boolean empty = false;
+        String message = "";
         if(func.equals("add")) {
+        	empty = true;
+        	message = "The"+id+"is add to your shopping cart!";
         	if (previousItems == null) {
         		previousItems = new HashMap<String,Map.Entry<String, Integer>>();
         		Map.Entry<String, Integer> value = new AbstractMap.SimpleEntry<>(id,1);
@@ -85,6 +91,11 @@ public class shopingCartServlet extends HttpServlet {
         			}
         		}
         	}
+        	else {
+        		//System.out.print("The shopping cart is empty");
+        		previousItems = new HashMap<String,Map.Entry<String, Integer>>();
+        		session.setAttribute("previousItems", previousItems);
+        	}
         }
         JsonObject jsonObject = new JsonObject();
         JsonArray key = new JsonArray();
@@ -98,7 +109,7 @@ public class shopingCartServlet extends HttpServlet {
         jsonObject.add("id",key);
         jsonObject.add("value",value);
         jsonObject.add("key", id_l);
-        System.out.println(jsonObject.toString());
+       // System.out.println(jsonObject.toString());
         response.getWriter().write(jsonObject.toString());
     }
 }
