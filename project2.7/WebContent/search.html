@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <title>Search</title>
 <style>
@@ -136,10 +137,110 @@ input[type=submit]
 	border:2px solid gold;
 }
 
+=======
+	<meta charset="UTF-8">
+    <title>Search Page</title>
+	<style>
+
+	body{
+		background-color:green;
+	}
+
+	h1{
+		margin-top:80px;
+		text-align:center;
+		text-transform:uppercase;
+		color: gold;
+		font-family: "Comic Sans MS", cursive, sans-serif;
+		font-size: 50px;
+	}
+
+	h2{
+		text-align:center;
+		color:white;
+		font-family: "Comic Sans MS", cursive, sans-serif;
+		font-size: 30px;
+	}
+
+	input[type=title]
+	{
+		width:200px;
+		padding:8px 10px;
+		margin: auto;
+		box-sizing:border-box;
+		border:2px solid gold;
+		border-radius:4px;
+	}
+
+	input[type=year]
+	{
+		width:200px;
+		padding:8px 10px;
+		margin-left:6px;
+		box-sizing:border-box;
+		border:2px solid gold;
+		border-radius:4px;
+	}
+	input[type=director]
+	{
+		width:200px;
+		padding:8px 10px;
+		margin: auto;
+		box-sizing:border-box;
+		border:2px solid gold;
+		border-radius:4px;
+	}
+	input[type=star]
+	{
+		width:200px;
+		padding:8px 10px;
+		margin: auto;
+		box-sizing:border-box;
+		border:2px solid gold;
+		border-radius:4px;
+	}
+	input[type=submit]
+	{
+		margin-top: 15px;
+		margin-left:46.5%;
+		display:block;
+		background-color:black;
+		color:white;
+		font-family: "Comic Sans MS", cursive, sans-serif;
+		font-size: 25px;
+		padding:8px 12px;
+		box-sizing:border-box;
+		border:2px solid gold;
+	}
+	#button {
+    	width: 6em;
+    	border: 2px solid green;
+    	background: #ffe;
+    	border-radius: 5px;
+    	background-color:grey;
+	}
+
+	a {
+   		display: block;
+    	width: 100%;
+    	line-height: 2em;
+    	text-align: left;
+    	text-decoration: none;
+    	border-radius: 5px;
+	}
+	a:visited{
+		color:black;
+	}
+	a:hover {
+    	color: red;
+    	background: #eff;
+	}
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 </style>
 </head>
 <body>
 
+<<<<<<< HEAD
 <h1>Fablix</h1>
 <ul>
   <li><a href="#shopping-cart" onclick="window.location.href='shopingCart.html'">Shopping Cart</a></li>
@@ -163,10 +264,33 @@ input[type=submit]
     <br>
     <h2><b>Star</b>
     <input type="text" name="star"></h2>
+=======
+<h2>Search</h2>
+<div id="Button"><a href="shopingCart.html">Check Out</a></div>
+<div id="Button"><a href="main-page.html">Back to main page</a></div>
+<!-- Set the method to POST to avoid showing the username/password in the URL
+     The default action is disabled to allow your own implementation. -->
+<form id="search_form" method="post" action="#">
+    <h3><b>title</b>
+    <input type="text"   name="title"></h3>
+    <br>
+    <h3><b>year</b>
+    <input type="text"   name="year"></h3>
+    <br>
+    <h3><b>director</b>
+    <input type="text"    name="director"></h3>
+    <br>
+    <h3><b>star</b>
+    <input type="text"   name="star"></h3>
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
     <br>
     <input type="submit" value="Search">
 </form>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 <!-- include jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- include our own JS file -->

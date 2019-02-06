@@ -44,6 +44,7 @@ function handleCartArray(resultDataJson) {
 	console.log(resultDataJson["value"]);
     
     // change it to html list
+<<<<<<< HEAD
 	 let backInfoElement = jQuery('#Back');
 	 backInfoElement.append("<p><a href=main-page.html>Back to Main Page</a></p>");
 	 
@@ -52,20 +53,32 @@ function handleCartArray(resultDataJson) {
 	 
 	 $("#CheckOut").css({'margin-left': '700px', 'margin-top': '50px'});
 	let shoppingTableBodyElement = jQuery("#shopping_table_body");
+=======
+	let mainPageInfoElement = jQuery('#mainPage');
+	mainPageInfoElement.append("<p><a href=main-page.html>Back to Main Page</a></p>");
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 //    let res = "<ul>";
 //    for(let i = 0; i < resultDataJson["key"].length; i++) {
 //        // each item will be in a bullet point
 //        res += "<li>" + resultDataJson["key"][i] +"num:"+resultDataJson["value"][i]+ "</li>";   
 //    }
 //    res += "</ul>";
+<<<<<<< HEAD
 	for (let i = 0; i < resultDataJson["key"].length; i++) {
      		   
+=======
+	let shoppingTableBodyElement = jQuery("#shopping_table_body");
+	for (let i = 0; i < resultDataJson["key"].length; i++) {
+    	
+        //rowHTML += "<th>" + resultData[i]["movie_title"] + "</th>";
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
         let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>"+ resultDataJson["key"][i]+"</th>";
         rowHTML += "<th>"+"</th>";
         rowHTML += "<th>" + resultDataJson["value"][i] + "</th>";
         rowHTML += "<th>" 
+<<<<<<< HEAD
         	+ "<a href=shopingCart.html?item="+ resultDataJson["key"][i]+"&id="+resultDataJson["id"][i]+"&func=add>" + "Add" +
         	"</a>" + 
         	"</th>";
@@ -77,6 +90,24 @@ function handleCartArray(resultDataJson) {
         // Append the row created to the table body, which will refresh the page
         shoppingTableBodyElement.append(rowHTML);
 	}
+=======
+        	+ "<a href=shopingCart.html?item="+ resultDataJson["key"][i]+"&id="+resultDataJson["id"][i]+"&func=add>"+"add one more"+
+        	"</a>" + 
+        	"</th>";
+        rowHTML += "<th>" 
+        	+ "<a href=shopingCart.html?item="+resultDataJson["key"][i]+"&id="+resultDataJson["id"][i]+"&func=sub>"+ "sub one more" + 
+        	"</a>" + 
+        	"</th>"; 
+        rowHTML += "</tr>";
+        console.log(rowHTML);
+        // Append the row created to the table body, which will refresh the page
+        shoppingTableBodyElement.append(rowHTML);
+	}
+	if(resultDataJson["key"].length > 0){
+		let checkOutInfoElement = jQuery('#CheckOut');
+		checkOutInfoElement.append("<p><a href=checkOut.html>Check Out</a></p>");
+	}
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
     // clear the old array and show the new array in the frontend
 //    $("#item_list").html("");
 //    $("#item_list").append(res);
@@ -112,6 +143,7 @@ function handleCartArray(resultDataJson) {
 let func = getParameterByName('func');
 let item = getParameterByName('item');
 let Id = getParameterByName('id');
+<<<<<<< HEAD
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method
@@ -120,3 +152,12 @@ jQuery.ajax({
     url: "api/shopingCart?item="+item+"&func="+func+"&id="+Id,
     success: (resultDataString) => handleCartArray(resultDataString)// Setting callback function to handle data returned successfully by the SingleStarServlet
 });
+=======
+
+jQuery.ajax({
+	dataType: "json",  // Setting return data type
+	method: "GET",// Setting request method
+	url: "api/shopingCart?item="+item+"&func="+func+"&id="+Id,
+	success: (resultDataString) => handleCartArray(resultDataString)// Setting callback function to handle data returned successfully by the SingleStarServlet
+});
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046

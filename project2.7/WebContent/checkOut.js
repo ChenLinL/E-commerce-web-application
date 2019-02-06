@@ -34,16 +34,22 @@ function submitForm(formSubmitEvent) {
      */
     formSubmitEvent.preventDefault();
     
+<<<<<<< HEAD
     console.log("SOMETHING HAPPENED");
     
+=======
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
     $.post(
         "api/checkOut",
         // Serialize the login form to the data sent by POST request
         $("#checkOut_form").serialize(),
         (resultDataString) => handleResult(resultDataString)
     );
+<<<<<<< HEAD
     
     console.log("SOMETHING HERE");
+=======
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 }
 
 // Bind the submit action of the form to a handler function

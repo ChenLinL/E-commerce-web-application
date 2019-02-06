@@ -23,20 +23,35 @@ import java.text.SimpleDateFormat;
 @WebServlet(name = "checkOutServlet", urlPatterns = "/api/checkOut")
 public class checkOutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+<<<<<<< HEAD
         
+=======
+    
+    
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
     //Create a dataSource
   	@Resource(name = "jdbc/moviedb")
   	private DataSource dataSource;
   	
+<<<<<<< HEAD
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+=======
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
     	
     	PrintWriter out = response.getWriter();
     	
     	try {
 			Connection dbcon = dataSource.getConnection();
 			System.out.println("check");
+<<<<<<< HEAD
 			
 			
+=======
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 			String id = request.getParameter("id");
 	        String first = request.getParameter("firstName");
 	        String last = request.getParameter("lastName");
@@ -46,12 +61,18 @@ public class checkOutServlet extends HttpServlet {
 	        System.out.println(last);
 	        System.out.println(date_r);
 	        Date date = Date.valueOf(date_r);
+<<<<<<< HEAD
 	        
 	        
 	        //System.out.println(date);
 	        System.out.println("RUNNING HERE");
 	        String query = "Select cus.id from creditcards as c, customers as cus where c.id = cus.ccId and "
 	        		+ "c.id =? and c.firstName=? and c.lastName=? and c.expiration=?";
+=======
+	        System.out.println(date);
+	        System.out.println(date.toString());
+	        String query = "Select cus.id from creditcards as c, customers as cus where c.id = cus.ccId and c.id =? and c.firstName=? and c.lastName=? and c.expiration=?";
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 	        
 	        PreparedStatement statement = dbcon.prepareStatement(query);
 	        statement.setString(1, id);
@@ -62,12 +83,20 @@ public class checkOutServlet extends HttpServlet {
 	        System.out.println("3");
 	        statement.setDate(4, date);
 	        System.out.println("4");
+<<<<<<< HEAD
 	        
 	        
 	        
 	        // Perform the query
 	        ResultSet rs = statement.executeQuery();
 	        //System.out.println(statement.toString());
+=======
+	        // Perform the query
+	        ResultSet rs = statement.executeQuery();
+	        //System.out.println(statement.toString());
+	        System.out.println(rs.toString());
+	     	String check_password = "";
+>>>>>>> f3409eb8b828f8fd936bc16f6e3a5ef950bd3046
 	     	JsonObject responseJsonObject = new JsonObject();
 	     	if (!rs.next())
 	     	{
