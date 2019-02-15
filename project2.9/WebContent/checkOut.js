@@ -5,7 +5,7 @@
 function handleResult(resultDataString) {
     resultDataJson = JSON.parse(resultDataString);
     
-    console.log(resultDataJson["status"]);
+    console.log("status");
 
     // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
@@ -13,8 +13,8 @@ function handleResult(resultDataString) {
     } else {
         // If login fails, the web page will display 
         // error messages on <div> with id "login_error_message"
-        console.log(resultDataJson["message"]);
-        $("#checkOut_error_message").text(resultDataJson["message"]);
+        console.log("Your Credit card Information is incorrect. Please try again");
+        $("#checkOut_error_message").text("Your Credit card Information is incorrect. Please try again");
         $("#checkOut_error_message").css({'color': 'gold', 'text-align': 'center',
         	'margin-top': '20px',
         	'font-family' : '"Comic Sans MS", cursive, sans-serif'});

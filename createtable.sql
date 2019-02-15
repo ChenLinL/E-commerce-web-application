@@ -64,7 +64,7 @@ create table customers(
 );
 
 create table sales(
-	id integer not null,
+	id integer not null auto_increment,
     customerId integer not null,
     movieId varchar(10) not null,
     saleDate date not null,

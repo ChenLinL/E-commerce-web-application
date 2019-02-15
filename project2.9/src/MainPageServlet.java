@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,7 +47,7 @@ public class MainPageServlet extends HttpServlet {
 		try {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
-			Statement statement = dbcon.createStatement();
+			//Statement statement = dbcon.createStatement();
 			
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, stars.name as Stars, stars.id, ratings.rating, genres.name as Genre "
 				       + "FROM movies, (select * from ratings order by rating desc limit 3) ratings, genres, genres_in_movies, stars, stars_in_movies "
@@ -59,8 +60,8 @@ public class MainPageServlet extends HttpServlet {
 			
 			JsonArray jsonArray = new JsonArray();
 			JsonObject jsonObject = new JsonObject();
-			
-			ResultSet rs = statement.executeQuery(query);
+			PreparedStatement statement = dbcon.prepareStatement(query);
+			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next())
 			{

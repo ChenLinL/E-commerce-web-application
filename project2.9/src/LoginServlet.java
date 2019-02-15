@@ -1,5 +1,8 @@
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.annotation.Resource;
 import javax.servlet.annotation.WebServlet;
@@ -8,12 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
+import com.google.gson.JsonObject;
 /**
  * This class is declared as LoginServlet in web annotation, 
  * which is mapped to the URL pattern /api/login
@@ -40,13 +40,13 @@ public class LoginServlet extends HttpServlet {
 			String username = request.getParameter("username");
 	        String password = request.getParameter("password");
 	        
-	        String query = "Select customers.email, customers.password " + "From customers Where customers.email = '" + username + "'";
+	        String query = "Select customers.email, customers.password From customers Where customers.email = ?";
 	        
 	        PreparedStatement statement = dbcon.prepareStatement(query);
-	        
+	        statement.setString(1, username);
 	        // Perform the query
 	        ResultSet rs = statement.executeQuery();
-	     	String check_password = "";
+	     	//String check_password = "";
 	     	
 	     	if (!rs.next())
 	     	{
@@ -58,8 +58,9 @@ public class LoginServlet extends HttpServlet {
 	     	
 	     	else
 	     	{
-	     		check_password = rs.getString("customers.password");
-				if (!password.equals(check_password))
+	     		String encryptedPassword = rs.getString("customers.password");
+	     		boolean success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
+				if (!success)
 				{
 					JsonObject responseJsonObject = new JsonObject();
 		            responseJsonObject.addProperty("status", "fail");

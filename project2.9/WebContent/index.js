@@ -20,7 +20,7 @@ function getParameterByName(target) {
 }
 
 function replaceSpace(target){
-	target = target.replace(/ /g,"_");
+	target = target.replace(/ /g,"%20");
 	return target;
 }
 
@@ -64,18 +64,18 @@ function handleMovieResult(resultData) {
     scInfoElement.append("<input type='button' value='Check Out' onclick=window.location=shopingCart.html>");
     let sortTypeInfoElement = jQuery('#SortType');
     sortTypeInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortType</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=rating"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
-+'>Rating</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&num="+resultData[0]['num']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=title"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
++'>Rating</a><a class="dropdown-item" href=index.html?title='+replaceSpace(resultData[0]['mtitle'])+"&num="+resultData[0]['num']+'&year='+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType=title"+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     +'>Title</a></div></div>');
     let sortOrderInfoElement = jQuery('#SortOrder');
     sortOrderInfoElement.append('<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sortOrder</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
-    		  +'>DESC</a><a class="dropdown-item" href=index.html?title='+resultData[0]['mtitle']+"&num="+resultData[0]['num']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=ASC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
+    		  +'>DESC</a><a class="dropdown-item" href=index.html?title='+replaceSpace(resultData[0]['mtitle'])+"&num="+resultData[0]['num']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=ASC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
 	+'>ASC</a></div></div>');
     let ipInfoElement = jQuery('#items_per_page');
     
     let jq='<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">items per page</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
     for(let i =1; i < 100;++i){
     jq+='<a class="dropdown-item" href=index.html?title='
-    		+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+
+    		+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+
     		"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&num="+resultData[0]['num']+"&numRecord="+
     		i+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
     		  +">"+i+"</a>";
@@ -118,7 +118,7 @@ function handleMovieResult(resultData) {
     let p ='<nav aria-label="Page navigation example">'+
       '<ul class="pagination">'+
       '<li class="page-item"><a class="page-link" href='+
-      "index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
+      "index.html"+"?title="+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
       "&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+
       prev+"&numRecord="+range+"&sortType="+resultData[0]['msortType']+
       "&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]
@@ -135,7 +135,7 @@ function handleMovieResult(resultData) {
 //    }
    
      p+='<li class="page-item"><a class="page-link" href='+
-     "index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
+     "index.html"+"?title="+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&num="+parseInt(resultData[0]["num"])+
      "&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+
      next+"&numRecord="+range+"&sortType="+resultData[0]['msortType']+
      "&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]
@@ -150,7 +150,7 @@ function handleMovieResult(resultData) {
     	let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" 
-        	+ "<a href=single-movie.html?id=" + resultData[i]['movie_id'] +"&title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']+">"
+        	+ "<a href=single-movie.html?id=" + resultData[i]['movie_id'] +"&title="+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']+">"
         	+ resultData[i]["movie_title"] + 
         	"</a>" + 
         	"</th>";
@@ -211,11 +211,10 @@ let sortType = getParameterByName('sortType');
 let sortOrder = getParameterByName('sortOrder');
 let title_i = getParameterByName('title_i');
 let genre = getParameterByName('genre');
-let num = getParameterByName('num');
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/movies?title="+mTitle+"&year="+mYear+"&num="+num+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/movies?title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&numRecord="+numRecord+"&sortType="+sortType+"&sortOrder="+sortOrder+"&title_i="+title_i+"&genre="+genre, // Setting request url, which is mapped by StarsServlet in Stars.java
     //success:handleMovieResult
     success: (resultData) => handleMovieResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
