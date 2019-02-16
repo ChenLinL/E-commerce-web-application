@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+	#button {
+    	width: 6em;
+    	border: 2px solid green;
+    	background: #ffe;
+    	border-radius: 5px;
+    	background-color:grey;
+	}
+
+	a {
+   		display: block;
+    	width: 100%;
+    	line-height: 2em;
+    	text-align: left;
+    	text-decoration: none;
+    	border-radius: 5px;
+	}
+	a:visited{
+		color:green;
+	}
+	a:hover {
+    	color: red;
+    	background: #eff;
+	}
+	</style>
+	<title>Fablix</title>
+</head>
+<body>
+
+<h1>dashBoard</h1>
+
+<table id=dashBoard class="table table-striped">
+	<thead>
+    <tr>
+        <th>Name of the Table</th>
+        <th>fields</th>
+        <th>types</th>
+        <th>Could be Null?</th>
+        <th></th>
+    </tr>
+	</thead>
+	<tbody id=dashBoard_body></tbody>
+</table>
+<form id="add_form" method="get" onSubmit="return get_value(this);" action="">
+	<h5><b>Name of Movie</b>
+    <input type="text" name="movie"></h5>
+    <br>
+    <h5><b>Year</b>
+    <input type="text" name="year"></h5>
+    <br>
+    <h5><b>Director</b>
+    <input type="text" name="director"></h5>
+    <br>
+    <h5><b>Star</b>
+    <input type="text" name="star"></h5>
+    <br>
+    <h5><b>Birth date of Star</b>
+    <input type="text" name="bod_star"></h5>
+    <br>
+    <h5><b>genre</b>
+    <input type="text" name="genre"></h5>
+    <br>
+    <input type="submit" value="add">
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script src="dashBoard.js"></script>
+
+</body>
+
+<footer>
+	
+</footer>
+</html>
+
+<script language = "JavaScript">
+function get_value(it){
+	var movie = it.movie.value;
+	var year = it.year.value;
+	var director = it.year.value;
+	if(movie.length > 0 && (year.length ==0 || director.length==0)){
+		alert("Please enter all the information for adding a movie. The year and director cannot be empty");
+		window.location.replace("dashBoard.html?movie=&year=&director=&bod_star=&bod=&genre=");
+	}
+	var star = it.star.value;
+	var bod = it.bod_star.value;
+	var genre = it.genre.value;
+	window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_bod="+bod+"&genre="+genre);
+}
+</script>

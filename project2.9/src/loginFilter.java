@@ -24,13 +24,16 @@ public class loginFilter implements Filter {
         // Check if the URL is allowed to be accessed without log in
         if (this.isUrlAllowedWithoutLogin(httpRequest.getRequestURI())) {
             // Keep default action: pass along the filter chain
+        	System.out.println("gogo");
             chain.doFilter(request, response);
+            //System.out.println(request);
             return;
         }
 
         // Redirect to login page if the "user" attribute doesn't exist in session
         System.out.println(httpRequest.getSession().getAttribute("user"));
         if (httpRequest.getSession().getAttribute("user") == null) {
+        	System.out.println("user");
             httpResponse.sendRedirect("login.html");
         } else {
             // If the user exists in current session, redirects the user to the corresponding URL
@@ -45,7 +48,8 @@ public class loginFilter implements Filter {
         requestURI = requestURI.toLowerCase();
 
         return requestURI.endsWith("login.html") || requestURI.endsWith("login.js")
-                || requestURI.endsWith("api/login");
+                || requestURI.endsWith("api/login") ||requestURI.endsWith("dashlogin.html") || requestURI.endsWith("dashlogin.js")
+                || requestURI.endsWith("api/dashlogin");
     }
 
     /**
