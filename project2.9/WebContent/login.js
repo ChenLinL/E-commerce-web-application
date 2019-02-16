@@ -5,8 +5,8 @@
 function handleLoginResult(resultDataString) {
     resultDataJson = JSON.parse(resultDataString);
     
-    console.log(resultDataJson["status"]);
-
+    console.log(resultDataJson);
+    
     // If login succeeds, it will redirect the user to index.html
     if (resultDataJson["status"] === "success") {
         window.location.replace("main-page.html");
