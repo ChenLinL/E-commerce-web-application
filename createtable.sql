@@ -2,6 +2,12 @@ DROP DATABASE IF EXISTS moviedb;
 CREATE DATABASE moviedb;
 USE moviedb;
 
+create table employees(
+	email varchar(50) not null,
+	password varchar(20) not null,
+	fullname varchar(100)
+);
+
 create table movies(
 	id varchar(10) not null,
     title varchar(100) not null,
