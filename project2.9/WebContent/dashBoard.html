@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<style>
+	body{
+		text-align:center;
+	}
+	
 	#button {
     	width: 6em;
     	border: 2px solid green;
@@ -31,12 +35,17 @@
     	color: red;
     	background: #eff;
 	}
+	input[type=text][name=star_name]
+	{
+		margin-left:34px;
+	}
+	
 	</style>
 	<title>Fablix</title>
 </head>
 <body>
 
-<h1>dashBoard</h1>
+<h1>DashBoard</h1>
 
 <table id=dashBoard class="table table-striped">
 	<thead>
@@ -50,27 +59,42 @@
 	</thead>
 	<tbody id=dashBoard_body></tbody>
 </table>
+<hr>
+
+<form id="add_star" method="get" action="">
+	<h5><b>Name of Star</b>
+    <input type="text" id= "stars" name="star_name"></h5>
+    <br>
+    <h5><b>Birth Year of Star</b>
+    <input type="text" id = "bods" name="star_bod"></h5>
+    <br>
+    <input type="button" value="Add Star" onclick="add_star();">
+</form>
+
+<hr>
+
 <form id="add_form" method="get" onSubmit="return get_value(this);" action="">
 	<h5><b>Name of Movie</b>
     <input type="text" name="movie"></h5>
     <br>
-    <h5><b>Year</b>
+    <h5><b>Released Year</b>
     <input type="text" name="year"></h5>
     <br>
     <h5><b>Director</b>
     <input type="text" name="director"></h5>
     <br>
-    <h5><b>Star</b>
+    <h5><b>Name of Star</b>
     <input type="text" name="star"></h5>
     <br>
-    <h5><b>Birth date of Star</b>
+    <h5><b>Birth Date of Star</b>
     <input type="text" name="bod_star"></h5>
     <br>
-    <h5><b>genre</b>
+    <h5><b>Genre</b>
     <input type="text" name="genre"></h5>
     <br>
     <input type="submit" value="add">
 </form>
+<hr>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -85,7 +109,32 @@
 </footer>
 </html>
 
-<script language = "JavaScript">
+<script>
+function add_star()
+{
+	var starName = document.getElementById('stars').value;
+	var bod = document.getElementById('bods').value;
+	
+	if (starName.length == 0)
+	{
+		alert("Star name cannot be empty");
+		
+	}
+	else if (!Number.isInteger(+bod))
+	{
+		alert("Birth Year must be an integer");
+	}
+	
+	else
+	{
+		alert("Star has been successfully Added");
+		
+		// add=0 if a star is added
+		window.location.replace("dashBoard.html?movie=&year=&director=&star="+starName+"&bod_bod="+bod+"&genre="+genre
+				+"&add=0");
+	}
+}
+
 function get_value(it){
 	var movie = it.movie.value;
 	var year = it.year.value;
@@ -97,6 +146,9 @@ function get_value(it){
 	var star = it.star.value;
 	var bod = it.bod_star.value;
 	var genre = it.genre.value;
-	window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_bod="+bod+"&genre="+genre);
+	
+	// add=1 if movie is added
+	window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_bod="+bod+"&genre="+genre
+			+"&add=1");
 }
 </script>

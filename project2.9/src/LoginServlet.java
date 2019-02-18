@@ -60,6 +60,7 @@ public class LoginServlet extends HttpServlet {
 	     	else
 	     	{
 	     		String encryptedPassword = rs.getString("customers.password");
+	     		
 	     		boolean success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
 				if (!success)
 				{
@@ -69,6 +70,7 @@ public class LoginServlet extends HttpServlet {
 		            responseJsonObject.addProperty("message", "Incorrect Password. Please Try Again.");
 		            response.getWriter().write(responseJsonObject.toString());
 				}
+				
 				else
 				{
 					boolean check = false;

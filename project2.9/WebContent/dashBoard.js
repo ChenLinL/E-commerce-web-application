@@ -71,12 +71,13 @@ let movie = getParameterByName('movie');
 let year= getParameterByName('year');
 let director= getParameterByName('director');
 let star= getParameterByName('star');
-let bod_star= getParameterByName('bod_star');
+let bod_star= getParameterByName('bod_bod');
 let genre= getParameterByName('genre');
+let add = getParameterByName('add');
 
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/dashBoard?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_star="+bod_star+"&genre="+genre,
+    url: "api/dashBoard?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_star="+bod_star+"&genre="+genre + "&add=" +add,
     success: (resultData) => handleDashResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });

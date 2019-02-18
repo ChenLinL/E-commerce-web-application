@@ -37,62 +37,7 @@ public class SearchServlet extends HttpServlet {
 			String year =  request.getParameter("year");
 			String director =  request.getParameter("director");
 			String star =  request.getParameter("star");
-//			System.out.println(title.isEmpty());
-//			System.out.println(year.isEmpty());
-//			System.out.println(director.isEmpty());
-//			System.out.println(star.isEmpty());
-//			Connection dbcon;
-//			try {
-//				dbcon = dataSource.getConnection();
-//		
-//				//Statement statement = dbcon.createStatement();
-//				int total = 0;
-//				String query = "SELECT count(*) as num "
-//					       + "FROM" + " (select movies.id, movies.title, movies.year, movies.director from movies,ratings";
-//				//System.out.println(query);
-//				if(!star.isEmpty()&& !star.equals("null")) {
-//					query += ",stars_in_movies as s_i_m, stars as s";
-//				}
-//				query += " where movies.id = ratings.movieId";
-//				if(!title.isEmpty() && !title.equals("null")) {
-//				    //query += " and movies.title LIKE "+"'%"+title+"%'";
-//					query += " and movies.title LIKE ?";
-//				    total += 1;
-//				}
-//				if(!year.isEmpty()&& !year.equals("null")) {
-//					//query += " and movies.year = "+year;
-//					query += " and movies.year LIKE ?";
-//					total += 1;
-//				}
-//				if(!director.isEmpty()&& !director.equals("null")) {
-//					//query += " and movies.director = " +"'"+director+"'";
-//					query += " and movies.director = LIKE ?";
-//					total += 1;
-//				}
-//				if(!star.isEmpty()&& !star.equals("null")) {
-//					//query += " and movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name = "+"'"+star+"'";
-//					query += " and movies.id = s_i_m.movieId and s_i_m.movieId = ratings.movieId and s.id = s_i_m.starId and s.name LIKE ?";
-//					total += 1;
-//				}
-//				query +=")movies";
-//				System.out.println(query);
-//				PreparedStatement statement = dbcon.prepareStatement(query);
-//			    String[] sL = new String[] {title,year,director,star};
-//				for(int i = 1; i <= total; ++i)
-//				{
-//					statement.setString(i, "%"+sL[i-1]+"%");
-//				}
-//				ResultSet rs = statement.executeQuery();
-//				//System.out.println(rs.next());
-//				System.out.println("1");
-//				JsonObject jsonObject = new JsonObject();
-//				while(rs.next()) {
-//					int num = rs.getInt("num");
-//					System.out.println("2");
-//				//String m_num = rs.getString("num");
-//					System.out.println(num);
-//					String m_num = Integer.toString(num);
-//					System.out.println(m_num);
+
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty("title", title);
 			jsonObject.addProperty("year",year);
@@ -103,19 +48,7 @@ public class SearchServlet extends HttpServlet {
 			System.out.println(jsonObject.toString());
 			out.write(jsonObject.toString());
 			response.setStatus(200);
-				
-//				rs.close();
-//				statement.close();
-//				dbcon.close();
-//			}
-//			catch (Exception e) {
-//				JsonObject jsonObject = new JsonObject();
-//				jsonObject.addProperty("errorMessage", e.getMessage());
-//				out.write(jsonObject.toString());
-//				
-//				response.setStatus(500);
-//			}
-//			
+						
 			out.close();
     }
 		

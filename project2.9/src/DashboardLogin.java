@@ -40,15 +40,13 @@ public class DashboardLogin extends HttpServlet {
 			String username = request.getParameter("e_name");
 	        String password = request.getParameter("e_password");
 	        
-	        String query = "Select e.email, e.password From emploees as e Where e.email = ?";
+	        String query = "Select e.email, e.password From employees as e Where e.email = ?";
 	        
 	        PreparedStatement statement = dbcon.prepareStatement(query);
 	        statement.setString(1, username);
 	        // Perform the query
 	        ResultSet rs = statement.executeQuery();
-	     	//String check_password = "";
-	        System.out.println("query");
-	     	System.out.println(query);
+	     
 	     	if (!rs.next())
 	     	{
 				JsonObject responseJsonObject = new JsonObject();
@@ -60,8 +58,11 @@ public class DashboardLogin extends HttpServlet {
 	     	else
 	     	{
 	     		String encryptedPassword = rs.getString("e.password");
+	     		
 	     		System.out.println(encryptedPassword);
+	     		
 	     		boolean success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
+	     		
 				if (!success)
 				{
 					JsonObject responseJsonObject = new JsonObject();
