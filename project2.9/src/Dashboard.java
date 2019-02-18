@@ -31,34 +31,87 @@ public class Dashboard extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String movie= request.getParameter("movie");
+	
+	public String generate_newstarId(String max_id)
+	{	
+		max_id = max_id.replace("n", "");
+		max_id = max_id.replaceAll("m", "");
+		int new_id = Integer.parseInt(max_id) + 1;
+		String new_starId = "nm" + Integer.toString(new_id); 
+		
+		return new_starId;
+		
+	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		
+		String star= request.getParameter("star");
+		
+		String bod_star= request.getParameter("bod_star");
+		
+		String add = request.getParameter("add");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
+		
+		String movie= request.getParameter("movie");	
 		String year= request.getParameter("year");
 		String director = request.getParameter("director");
-		String star= request.getParameter("star");
-		String bod_star= request.getParameter("bod_star");
 		String genre= request.getParameter("genre");
-		System.out.print(director);
+		
+		
 		boolean status = true;
 		String error_message = "";
+		
 		response.setContentType("application/json"); // Response mime type
-		//System.out.println("run single star");
+		
 		// Retrieve parameter id from url request.
 		PrintWriter out = response.getWriter();
+		
 		try {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();
 			
+			if (add.equals("0"))
+			{
+				System.out.println("ADDED STAR");
+				
+				String pre_query = "select max(id) as id from stars";					
+				PreparedStatement statement = dbcon.prepareStatement(pre_query);
+				
+				String query2 = "";
+				ResultSet rs = statement.executeQuery();
+				
+				while(rs.next())
+				{
+					String max_id = rs.getString("id");
+					String new_id = generate_newstarId(max_id);
+					System.out.println(new_id);
+					// insert star when birth year is indicated
+					if (!bod_star.equals(""))
+					{
+						int bod_result = Integer.parseInt(bod_star);
+						query2 = "INSERT INTO stars (id, name, birthYear) VALUES ('" + new_id + "'," + "'" + star + "'," + bod_result + ")";
+					}
+					// insert star when birth year is not indicated
+					else
+					{
+						query2 = "INSERT INTO stars (id, name) VALUES ('" + new_id + "'," + "'" + star + "')";
+					}
+				}
+
+				rs.close();			
+				System.out.println(query2);
+				statement = dbcon.prepareStatement(query2);
+				statement.executeUpdate();
+				statement.close();
+			}
 			String query = "show tables";
 
 			PreparedStatement statement = dbcon.prepareStatement(query);
 
 			ResultSet rs = statement.executeQuery();
-			//System.out.print(rs.toString());
+			
 			JsonObject result = new JsonObject();
 			JsonArray tables = new JsonArray();
-			//System.out.println(rs.toString());
 			
 			
 			while (rs.next())
