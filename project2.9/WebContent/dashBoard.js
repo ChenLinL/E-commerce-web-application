@@ -42,7 +42,7 @@ function submitAddForm(Form){
 
 
 function handleDashResult(resultData) {
-	 
+	 console.log(window.location.href);
 	 let dashBoardBodyElement = jQuery("#dashBoard_body");
 	 for (let i = 0; i < resultData["tables"].length; i++) {
 	    	
@@ -73,7 +73,7 @@ let director= getParameterByName('director');
 let star= getParameterByName('star');
 let bod_star= getParameterByName('bod_star');
 let genre= getParameterByName('genre');
-
+console.log(window.location.href);
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method

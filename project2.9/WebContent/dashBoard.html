@@ -50,7 +50,7 @@
 	</thead>
 	<tbody id=dashBoard_body></tbody>
 </table>
-<form id="add_form" method="get" onSubmit="return get_value(this);" action="">
+<form id="add_form" method="post" onSubmit="return get_value(this);" action="">
 	<h5><b>Name of Movie</b>
     <input type="text" name="movie"></h5>
     <br>
@@ -77,14 +77,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script src="dashBoard.js"></script>
-
-</body>
-
-<footer>
-	
-</footer>
-</html>
-
 <script language = "JavaScript">
 function get_value(it){
 	var movie = it.movie.value;
@@ -97,6 +89,13 @@ function get_value(it){
 	var star = it.star.value;
 	var bod = it.bod_star.value;
 	var genre = it.genre.value;
-	window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_bod="+bod+"&genre="+genre);
+	window.location.replace("dashBoard.html?add=1"+"&movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_star="+bod+"&genre="+genre);
 }
 </script>
+</body>
+
+<footer>
+	
+</footer>
+</html>
+
