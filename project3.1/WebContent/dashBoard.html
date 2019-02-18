@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<style>
-	body{
+	form{
 		text-align:center;
 	}
 	
@@ -39,6 +39,19 @@
 	{
 		margin-left:34px;
 	}
+	input[type=text][name=movie]
+	{
+		margin-left:25px;
+	}
+	input[type=text][name=director]
+	{
+		margin-left:51px;
+	}
+	
+	input[type=text][name=star]
+	{
+		margin-left:5px;
+	}
 	
 	</style>
 	<title>Fablix</title>
@@ -59,44 +72,43 @@
 	</thead>
 	<tbody id=dashBoard_body></tbody>
 </table>
-<<<<<<< HEAD
-<form id="add_form" method="post" onSubmit="return get_value(this);" action="">
-=======
 <hr>
 
 <form id="add_star" method="get" action="">
 	<h5><b>Name of Star</b>
     <input type="text" id= "stars" name="star_name"></h5>
-    <br>
+    
+
     <h5><b>Birth Year of Star</b>
     <input type="text" id = "bods" name="star_bod"></h5>
-    <br>
+    
+
     <input type="button" value="Add Star" onclick="add_star();">
 </form>
 
 <hr>
 
-<form id="add_form" method="get" onSubmit="return get_value(this);" action="">
->>>>>>> refs/remotes/origin/master
-	<h5><b>Name of Movie</b>
-    <input type="text" name="movie"></h5>
-    <br>
+<form id="add_form" method="get" action="">
+	<h5><b>Movie Title</b>
+    <input type="text" id= "single_movie" name="movie"></h5>
+    
+
     <h5><b>Released Year</b>
-    <input type="text" name="year"></h5>
-    <br>
+    <input type="text" id="release_year" name="year"></h5>
+    
+
     <h5><b>Director</b>
-    <input type="text" name="director"></h5>
-    <br>
+    <input type="text" id="movie_director" name="director"></h5>
+    
+
     <h5><b>Name of Star</b>
-    <input type="text" name="star"></h5>
-    <br>
-    <h5><b>Birth Date of Star</b>
-    <input type="text" name="bod_star"></h5>
-    <br>
+    <input type="text" id="single_star" name="star"></h5>
+   
     <h5><b>Genre</b>
-    <input type="text" name="genre"></h5>
-    <br>
-    <input type="submit" value="add">
+    <input type="text" id="movie_genre" name="genre"></h5>
+    
+
+    <input type="button" value="Add Movie" onclick="get_value();">
 </form>
 <hr>
 
@@ -105,9 +117,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <script src="dashBoard.js"></script>
-<<<<<<< HEAD
-<script language = "JavaScript">
-=======
 
 </body>
 
@@ -142,32 +151,55 @@ function add_star()
 	}
 }
 
->>>>>>> refs/remotes/origin/master
-function get_value(it){
-	var movie = it.movie.value;
-	var year = it.year.value;
-	var director = it.year.value;
-	if(movie.length > 0 && (year.length ==0 || director.length==0)){
-		alert("Please enter all the information for adding a movie. The year and director cannot be empty");
-		window.location.replace("dashBoard.html?movie=&year=&director=&bod_star=&bod=&genre=");
-	}
-	var star = it.star.value;
-	var bod = it.bod_star.value;
-	var genre = it.genre.value;
-<<<<<<< HEAD
-	window.location.replace("dashBoard.html?add=1"+"&movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_star="+bod+"&genre="+genre);
-=======
+function get_value(){
 	
-	// add=1 if movie is added
-	window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&bod_bod="+bod+"&genre="+genre
-			+"&add=1");
->>>>>>> refs/remotes/origin/master
+	var movie = document.getElementById('single_movie').value;
+	var year = document.getElementById('release_year').value;
+	var director = document.getElementById('movie_director').value;
+	var star = document.getElementById('single_star').value;
+	var genre = document.getElementById('movie_genre').value;
+	
+	if (movie.length == 0)
+	{
+		alert("Movie Title cannot be empty");
+	}
+	
+	else if (year.length == 0)
+	{
+		alert("Release Year cannot be empty");	
+	}
+	
+	else if (!Number.isInteger(+year))
+	{
+		alert("Release Year must be integer");
+	}
+	
+	else if (director.length == 0)
+	{
+		alert("Movie Director cannot be empty");
+	}
+		
+	else if (star.length == 0)
+	{
+		alert("Star cannot be empty");
+	}
+	
+	else if (genre.length == 0)
+	{
+		alert("Movie Genre cannot be empty");
+	}
+	
+	
+	else
+	{
+		// add=1 if movie is added
+		window.location.replace("dashBoard.html?movie="+movie+"&year="+year+"&director="+director+"&star="+star+"&genre="+genre
+				+"&add=1");
+	}
+	
+	//if(movie.length > 0 && (year.length ==0 || director.length==0)){
+	//	alert("Please enter all the information for adding a movie. The year and director cannot be empty");
+	//	window.location.replace("dashBoard.html?movie=&year=&director=&bod_star=&bod=&genre=");
+	//}
 }
 </script>
-</body>
-
-<footer>
-	
-</footer>
-</html>
-

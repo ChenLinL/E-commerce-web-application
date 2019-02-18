@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -42,6 +43,22 @@ public class Dashboard extends HttpServlet {
 		return new_starId;
 		
 	}
+	public String generate_newMovieId(String max_id)
+	{	
+		max_id = max_id.replace("tt", "");
+		int new_id = Integer.parseInt(max_id) + 1;
+		String new_movieId = "tt" + Integer.toString(new_id); 
+		
+		return new_movieId;
+		
+	}
+	public Integer generate_newGenreId(String max_id)
+	{	
+		int new_id = Integer.valueOf(max_id) + 1;
+		return new_id;
+		
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
 		String star= request.getParameter("star");
@@ -53,7 +70,8 @@ public class Dashboard extends HttpServlet {
 		
 		
 		String movie= request.getParameter("movie");	
-		String year= request.getParameter("year");
+		String year_i= request.getParameter("year");
+		//int year = Integer.valueOf(year_i);
 		String director = request.getParameter("director");
 		String genre= request.getParameter("genre");
 		
@@ -89,21 +107,96 @@ public class Dashboard extends HttpServlet {
 					if (!bod_star.equals(""))
 					{
 						int bod_result = Integer.parseInt(bod_star);
-						query2 = "INSERT INTO stars (id, name, birthYear) VALUES ('" + new_id + "'," + "'" + star + "'," + bod_result + ")";
+						query2 = "INSERT INTO stars (id, name, birthYear) VALUES (?,?,?)";
+						statement = dbcon.prepareStatement(query2);
+						statement.setString(1, new_id);
+						statement.setString(2, star);
+						statement.setInt(3, Integer.valueOf(bod_star));
 					}
 					// insert star when birth year is not indicated
 					else
 					{
-						query2 = "INSERT INTO stars (id, name) VALUES ('" + new_id + "'," + "'" + star + "')";
+						query2 = "INSERT INTO stars (id, name) VALUES (?,?)";
+						statement = dbcon.prepareStatement(query2);
+						statement.setString(1, new_id);
+						statement.setString(2, star);
 					}
 				}
 
 				rs.close();			
 				System.out.println(query2);
-				statement = dbcon.prepareStatement(query2);
+				//statement = dbcon.prepareStatement(query2);
 				statement.executeUpdate();
 				statement.close();
 			}
+			
+			// add a movie to database
+			else if (add.equals("1"))
+			{
+				
+				CallableStatement cStmt = dbcon.prepareCall("{call add_movie(?,?,?,?,?,?,?,?)}");
+				String star_query = "select max(id) as id from stars";
+				String movie_query = "select max(id) as id from movies";
+				String genre_query = "select max(id) as id from genres";
+				PreparedStatement star_statement = dbcon.prepareStatement(star_query);
+				PreparedStatement movie_statement = dbcon.prepareStatement(movie_query);
+				PreparedStatement genre_statement = dbcon.prepareStatement(genre_query);
+				ResultSet star_rs = star_statement.executeQuery();
+				ResultSet movie_rs = movie_statement.executeQuery();
+				ResultSet genre_rs = genre_statement.executeQuery();
+			
+				String star_id="";
+				String movie_id="";
+				int genre_id=0;
+				while(star_rs.next()) {
+				
+					String max_id = star_rs.getString("id");
+			
+					star_id = generate_newstarId(max_id);
+				}
+				while(movie_rs.next()) {
+				
+					String max_id = movie_rs.getString("id");
+				
+					movie_id = generate_newMovieId(max_id);
+				}
+				while(genre_rs.next()) {
+				
+					String max_id = genre_rs.getString("id");
+		
+					genre_id = generate_newGenreId(max_id);
+				}
+				star_rs.close();
+				movie_rs.close();
+				genre_rs.close();
+				star_statement.close();
+				movie_statement.close();
+				genre_statement.close();
+				
+				cStmt.setString(1, movie_id);
+				cStmt.setString(2, movie);
+				int year = Integer.valueOf(year_i);
+				cStmt.setInt(3, year);
+				cStmt.setString(4, director);
+				cStmt.setString(5, star_id);
+				cStmt.setString(6, star);
+				cStmt.setInt(7, genre_id);
+				cStmt.setString(8, genre);
+				boolean hadResult = cStmt.execute();
+				if(hadResult) {
+					ResultSet cstmtRs = cStmt.getResultSet();
+					while(cstmtRs.next()) {
+						status = false;
+						error_message = cstmtRs.getString("answer");
+						
+					}
+					cstmtRs.close();
+				}
+				cStmt.close();
+				System.out.print("message");
+				System.out.print(error_message);
+			}
+			
 			String query = "show tables";
 
 			PreparedStatement statement = dbcon.prepareStatement(query);
@@ -112,7 +205,6 @@ public class Dashboard extends HttpServlet {
 			
 			JsonObject result = new JsonObject();
 			JsonArray tables = new JsonArray();
-			
 			
 			while (rs.next())
 			{	

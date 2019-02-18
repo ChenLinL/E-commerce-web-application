@@ -56,7 +56,6 @@ function test(){
 
 function handleMovieResult(resultData) {
 	
-	console.log(resultData);
     let searchInfoElement = jQuery('#Search');
     searchInfoElement.append("<p><a href=search.html> Search</a></p>");
     let mainPageElement = jQuery('#mainPage');
