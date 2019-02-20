@@ -1,3 +1,5 @@
-First we usee the hash table to handle the data from the castparser and movie parser. The hash table's insert and check is 0(1) time.
-Second we use the procedure to prevent run too many sql statement to prevent the connection and check time from the sql.
-Third we use the batch insert instead of navie way. It could let large sql call statement to run one times instead of too many connection time.
+First we use the hashtable to store the data from the paraser file includes the movie, genres, stars info
+The we use the hash table to store the data from the database. For example, the data from movies table, the data from genres table, the data from stars table, the data from
+stars_in_movies, and the data from genres_in_movies. We use the hash table which contains the database data to deep compare with the hashtable from the paraser to prevent the 
+reducdent data. The search and insert time complex of hashtable is O(1). It is very fast.
+At the end we use the batch insert to insert all the parser data to the database.  

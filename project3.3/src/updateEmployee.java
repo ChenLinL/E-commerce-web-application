@@ -22,8 +22,8 @@ public class updateEmployee {
      */
     public static void main(String[] args) throws Exception {
 
-        String loginUser = "mytestuser";
-        String loginPasswd = "mypassword";
+        String loginUser = "root";
+        String loginPasswd = "lcl960410";
         String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 
         Class.forName("com.mysql.jdbc.Driver").newInstance();
