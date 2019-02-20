@@ -1,11 +1,13 @@
-DROP DATABASE IF EXISTS moviedb;
-CREATE DATABASE moviedb;
+#DROP DATABASE IF EXISTS moviedb;
+#CREATE DATABASE moviedb;
 USE moviedb;
 
+INSERT INTO employees VALUES('classta@email.edu','classta','TA CS122B');
+/*
 create table employees(
 	email varchar(50) not null,
-	password varchar(20) not null,
-	fullname varchar(100)
+    password varchar(20) not null,
+    fullname varchar(100)
 );
 
 create table movies(
@@ -90,3 +92,4 @@ create table ratings(
     foreign key (movieId) references movies(id) ON DELETE CASCADE,
 	PRIMARY KEY (movieId)
 );
+*/

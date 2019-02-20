@@ -27,7 +27,6 @@ function replaceSpace(target){
 function handlefuntion()
 {
 	var userinput = document.getElementById('input').value;
-	console.log(userinput);
 	if (userinput < 0)
 		alert("Quantity should be >= 0");
 	else
@@ -44,7 +43,7 @@ function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
 	num = Number(n);
 	for(i = 0; i<num; i++)
 	{
-		result += "<li><a href=single-star.html?id="+ l1[i]+"&title="+l3+"&year="+l4+"&director="+l5+"&star="+l6+"&firstRecord="+l7+"&numRecord="+l8+"&sortType="+l9+"&sortOrder="+l10+"&title_i="+l11+"&genre="+l12+">"+ l2[i] + "</a></li>";
+		result += "<li><a href=single-star.html?id="+ l1[i]+"&title="+l3+"&year="+l4+"&director="+l5+"&star="+l6+"&firstRecord="+l7+"&numRecord="+l8+"&sortType="+l9+"&sortOrder="+l10+"&title_i="+l11+"&genre="+replaceSpace(l12)+">"+ l2[i] + "</a></li>";
 	}
 	result += "</ul></th>";
 	return result;
@@ -55,6 +54,9 @@ function test(){
 }
 
 function handleMovieResult(resultData) {
+	
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	console.log(resultData);
 	
     let searchInfoElement = jQuery('#Search');
     searchInfoElement.append("<p><a href=search.html> Search</a></p>");
@@ -83,12 +85,9 @@ function handleMovieResult(resultData) {
     jq+='</div></div>';
     
     ipInfoElement.append(jq);
-    // Populate the movie table
-   
-    //"index.html?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder=DESC"+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']
-    // Find the empty table body by id "movie_table_body"
+  
     let movieTableBodyElement = jQuery("#movie_table_body");
-    console.log(resultData[0]["mgenre"]);
+ 
     //Iterate through resultData, no more than 20 entries
     var total_movie = parseInt(resultData[0]["num"]);
     var start =  parseInt(resultData[0]["mfirstRecord"]);
@@ -108,12 +107,7 @@ function handleMovieResult(resultData) {
     else{
     	prev = start - range;
     }
-    console.log(total_movie);
-    console.log(start);
-    console.log(range);
-    console.log(total_pages);
-    console.log(next);
-    console.log(prev);
+    
     let pignaElement = jQuery("#pigna");
     let p ='<nav aria-label="Page navigation example">'+
       '<ul class="pagination">'+
@@ -142,7 +136,7 @@ function handleMovieResult(resultData) {
      +">Next</a></li>"
      +"</ul>"+
      "</nav>";
-     console.log(p);
+     
      pignaElement.append(p);
     for (let i = 0; i < resultData.length; i++) {
     	
@@ -150,7 +144,7 @@ function handleMovieResult(resultData) {
     	let rowHTML = "";
         rowHTML += "<tr>";
         rowHTML += "<th>" 
-        	+ "<a href=single-movie.html?id=" + resultData[i]['movie_id'] +"&title="+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+resultData[0]['mgenre']+">"
+        	+ "<a href=single-movie.html?id=" + resultData[i]['movie_id'] +"&title="+replaceSpace(resultData[0]['mtitle'])+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]['mtitle_i']+"&genre="+replaceSpace(resultData[0]['mgenre']) +">"
         	+ resultData[i]["movie_title"] + 
         	"</a>" + 
         	"</th>";
@@ -185,22 +179,7 @@ function handleMovieResult(resultData) {
     
 }
     
-//var info = document.getElementById("infor_table").value;
-//function submitSearchForm(formSubmitEvent) {
-//    console.log("submit search form");
-//    /**
-//     * When users click the submit button, the browser will not direct
-//     * users to the url defined in HTML form. Instead, it will call this
-//     * event handler when the event is triggered.
-//     */
-//    formSubmitEvent.preventDefault();
-//    $.post(
-//        "api/movies?title="+mTitle+"&year="+mYear+"&director="+mDirector+"&star="+mStar+"&firstRecord="+firstRecord+"&title_i="+title_i+"&genre="+genre,
-//        // Serialize the login form to the data sent by POST request
-//        $("#search_form").serialize(),
-//        (resultDataString) => handleMovieResult(resultDataString)
-//    );
-//}
+
 let mTitle = getParameterByName('title');
 let mYear = getParameterByName('year');
 let mDirector = getParameterByName('director');
@@ -211,6 +190,7 @@ let sortType = getParameterByName('sortType');
 let sortOrder = getParameterByName('sortOrder');
 let title_i = getParameterByName('title_i');
 let genre = getParameterByName('genre');
+console.log(genre);
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method

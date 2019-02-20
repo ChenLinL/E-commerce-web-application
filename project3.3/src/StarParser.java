@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,15 +19,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class starParser {
+public class StarParser {
 
-   // static Vector<Actor> myActor;
+    static Vector<Actor> myActor;
     
     Document dom;
 
-    public starParser() {
+    public StarParser() {
         //create a list to hold the actor objects
-//        myActor = new Vector<Actor>();
+        myActor = new Vector<Actor>();
     }
 
     public void runExample() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -115,7 +116,6 @@ public class starParser {
             		 {
             			String max_id = rs.getString("id");
             			String new_id = generate_newstarId(max_id);
-            			System.out.println(new_id);
             			
             			// if birthYear is indicated
                 		if (a.getBirthYear() != 0)
@@ -222,7 +222,7 @@ public class starParser {
 
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
         //create an instance
-        starParser dpe = new starParser();
+        StarParser dpe = new StarParser();
 
         //call run example
         dpe.runExample();

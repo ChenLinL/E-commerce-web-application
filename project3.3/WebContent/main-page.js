@@ -13,7 +13,7 @@ function handleMovieResult(resultData) {
     var rowHTML = document.getElementById("genre");
     var title_rowHTML = document.getElementById("title");
     var alphabet_rowHTML = document.getElementById("alphabet");
-    
+    console.log(resultData);
     for (let i = 0; i < resultData[3]['movie_genre'].length; i++)
     {
     	var link = '<a href= "index.html?title=null&year=null&director=null&star=null&firstRecord=0&numRecord=5&sortType=rating&sortOrder=DESC&title_i=null&genre=' + resultData[3]['movie_genre'][i] + '">' + resultData[3]['movie_genre'][i] + '</a>';
