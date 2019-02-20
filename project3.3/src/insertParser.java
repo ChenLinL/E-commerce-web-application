@@ -35,7 +35,11 @@ class insertParser{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String jdbcURL="jdbc:mysql://localhost:3306/moviedb";
             try {
+<<<<<<< HEAD
                 conn = DriverManager.getConnection(jdbcURL,"mytestuser", "mypassword");
+=======
+                conn = DriverManager.getConnection(jdbcURL,"root", "lcl960410");
+>>>>>>> 271944203874e5b7c3d016695cf1981c515d9158
             } catch (SQLException e) {
                 e.printStackTrace();
             }
