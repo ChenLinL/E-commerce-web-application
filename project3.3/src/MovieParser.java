@@ -539,7 +539,7 @@
 //        Class.forName("com.mysql.jdbc.Driver").newInstance();
 //        String jdbcURL="jdbc:mysql://localhost:3306/moviedb";
 //        try {
-//            conn = DriverManager.getConnection(jdbcURL,"root", "lcl960410");
+//            conn = DriverManager.getConnection(jdbcURL,"mytestuser", "mypassword");
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
