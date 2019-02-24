@@ -950,7 +950,7 @@ public class MovieParser {
         //String sql_insert = "{call add_movie_parser(?,?,?,?,?,?)}";
         
         try {
-            conn = DriverManager.getConnection(jdbcURL,"root", "lcl960410");
+            conn = DriverManager.getConnection(jdbcURL,"mytestuser", "mypassword");
         } catch (SQLException e) {
             e.printStackTrace();
         }    	

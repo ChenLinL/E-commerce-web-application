@@ -45,10 +45,25 @@ public class Dashboard extends HttpServlet {
 	}
 	public String generate_newMovieId(String max_id)
 	{	
-		max_id = max_id.replace("tt", "");
-		int new_id = Integer.parseInt(max_id) + 1;
-		String new_movieId = "tt" + Integer.toString(new_id); 
+		String s1 = "";
+		int count = 0;
 		
+		for (int i = 0; i < max_id.length(); i++)
+		{			
+			if (Character.isLetter(max_id.charAt(i)))
+			{
+				s1 += i;
+				++count;
+			}
+		}
+		max_id = max_id.substring(count, max_id.length());
+		
+		//max_id = max_id.replace("tt", "");
+		
+		int new_id = Integer.parseInt(max_id) + 1;
+		String new_movieId = s1 + Integer.toString(new_id); 
+		
+		System.out.println(new_movieId);
 		return new_movieId;
 		
 	}
@@ -139,9 +154,7 @@ public class Dashboard extends HttpServlet {
 				String star_id="";
 				String movie_id="";
 				int genre_id=0;
-			
-				
-				
+							
 				cStmt.setString(1, movie);
 				int year = Integer.valueOf(year_i);
 				cStmt.setInt(2, year);
@@ -177,7 +190,7 @@ public class Dashboard extends HttpServlet {
 				JsonObject table = new JsonObject();
 				String table_name = rs.getString("Tables_in_moviedb");
 				//System.out.println(table_name);
-				String query_info = "describe "+table_name;
+				String query_info = "describe "+ table_name;
 			
 				PreparedStatement table_info = dbcon.prepareStatement(query_info);
 				//System.out.println(table_info.toString());
@@ -187,6 +200,7 @@ public class Dashboard extends HttpServlet {
 				JsonArray fileds = new JsonArray();
 				JsonArray types = new JsonArray();
 				JsonArray Nulls = new JsonArray();
+				
 				while (info_rs.next()) {
 					String filed = info_rs.getString("field");
 					String type = info_rs.getString("type");

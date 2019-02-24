@@ -52,7 +52,7 @@ public class SingleStarServelt extends HttpServlet {
 		String msortType = request.getParameter("sortType");
 		String msortOrder = request.getParameter("sortOrder");
 		String mtitle_i = request.getParameter("title_i");
-		String mgenre = request.getParameter("mgenre");
+		String mgenre = request.getParameter("genre");
 		try {
 			//Connect to dataSource
 			Connection dbcon = dataSource.getConnection();

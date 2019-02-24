@@ -52,7 +52,8 @@ public class SingleMovieServlet extends HttpServlet {
 		String msortType = request.getParameter("sortType");
 		String msortOrder = request.getParameter("sortOrder");
 		String mtitle_i = request.getParameter("title_i");
-		String mgenre = request.getParameter("mgenre");
+		String mgenre = request.getParameter("genre");
+		
 
 		try {
 			//Connect to dataSource
@@ -165,7 +166,7 @@ public class SingleMovieServlet extends HttpServlet {
 				jsonObject.addProperty("msortOrder", msortOrder);
 				jsonObject.addProperty("mtitle_i", mtitle_i);
 				jsonObject.addProperty("mgenre", mgenre);
-				//System.out.print(jsonObject.toString());
+			
 				jsonArray.add(jsonObject);
 			}
 			

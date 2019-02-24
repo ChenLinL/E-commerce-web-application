@@ -24,7 +24,7 @@ function getParameterByName(target) {
 }
 
 function replaceSpace(target){
-	target = target.replace(/ /g,"_");
+	target = target.replace(/ /g,"%20");
 	return target;
 }
 
@@ -47,15 +47,16 @@ function createTheHtml(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,n){
  * @param resultData jsonObject
  */
 function handleResult(resultData) {
+	console.log(resultData);
     // populate the movie info h3
     // find the empty h3 body by id "movie_info"
     let movieInfoElement = jQuery("#movie_info");
     
     console.log("handleResult: populating movie table from resultData");
     let scInfoElement = jQuery('#ShopingCart');
-    scInfoElement.append("<p><a href=shopingCart.html> Check Outt</a></p>");
+    scInfoElement.append("<p><a href=shopingCart.html> Check Out</a></p>");
     let backInfoElement = jQuery('#Back');
-    backInfoElement.append("<p><a href=index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+resultData[0]["mgenre"]+">Back to Search Result</a></p>");
+    backInfoElement.append("<p><a href=index.html"+"?title="+resultData[0]['mtitle']+"&year="+resultData[0]['myear']+"&director="+resultData[0]['mdirector']+"&star="+resultData[0]['mstar']+"&firstRecord="+resultData[0]['mfirstRecord']+"&numRecord="+resultData[0]['mnumRecord']+"&sortType="+resultData[0]['msortType']+"&sortOrder="+resultData[0]['msortOrder']+"&title_i="+resultData[0]["mtitle_i"]+"&genre="+replaceSpace(resultData[0]["mgenre"])+">Back to Search Result</a></p>");
 
     // Populate the star table
     // Find the empty table body by id "movie_table_body"
@@ -100,6 +101,7 @@ let sortType = getParameterByName('sortType');
 let sortOrder = getParameterByName('sortOrder');
 let title_i = getParameterByName('title_i');
 let genre = getParameterByName('genre');
+console.log(genre);
 jQuery.ajax({
     dataType: "json",  // Setting return data type
     method: "GET",// Setting request method

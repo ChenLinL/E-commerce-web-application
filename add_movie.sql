@@ -1,4 +1,3 @@
-
 DELIMITER $$ 
 
 CREATE PROCEDURE add_movie (IN m_id varchar(10), IN m_title varchar(100), IN m_year int,IN m_director varchar(100), IN star varchar(100), IN genre varchar(32))
