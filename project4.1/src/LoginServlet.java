@@ -31,9 +31,10 @@ public class LoginServlet extends HttpServlet {
   	
   	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
+        String userAgent = request.getHeader("User-Agent");
 
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+        //System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
         
         try {     	       	
 			Connection dbcon = dataSource.getConnection();
@@ -75,8 +76,13 @@ public class LoginServlet extends HttpServlet {
 				{
 					boolean check = false;
 					try {
-						RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-						check = true;
+						 if (userAgent != null && !userAgent.contains("Android")) { 
+							 RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+							 check = true;
+						 }
+						 else {
+							 check = true;
+						 }
 					}
 					catch(Exception e)
 					{
