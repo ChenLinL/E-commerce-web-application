@@ -74,6 +74,7 @@ public class LoginServlet extends HttpServlet {
 				else
 				{
 					boolean check = false;
+					/*
 					try {
 						RecaptchaVerifyUtils.verify(gRecaptchaResponse);
 						check = true;
@@ -86,7 +87,10 @@ public class LoginServlet extends HttpServlet {
 						responseJsonObject.addProperty("message", "Recaptcha Verification Failed");
 						response.getWriter().write(responseJsonObject.toString());
 					}
-					if (check)
+					*/
+					
+					// need to chagne back
+					if (!check)
 					{
 						// login success
 						String sessionId = ((HttpServletRequest) request).getSession().getId();
