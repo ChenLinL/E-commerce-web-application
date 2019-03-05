@@ -154,12 +154,8 @@ public class SingleMovieServlet extends HttpServlet {
 				jsonObject.add("movie_genre", movie_genreArray);
 				jsonObject.add("movie_star", movie_starArray);
 				jsonObject.add("star_id", starIdArray);
-				jsonObject.addProperty("movie_rating", movie_rating);			
+				jsonObject.addProperty("movie_rating", movie_rating);
 				jsonObject.addProperty("stars_num",stars_num);
-				System.out.println(jsonObject.toString());
-				
-				
-				
 				jsonObject.addProperty("mtitle", mtitle);
 				jsonObject.addProperty("myear", myear);
 				jsonObject.addProperty("mdirector", mdirector);
@@ -170,11 +166,10 @@ public class SingleMovieServlet extends HttpServlet {
 				jsonObject.addProperty("msortOrder", msortOrder);
 				jsonObject.addProperty("mtitle_i", mtitle_i);
 				jsonObject.addProperty("mgenre", mgenre);
-				System.out.println(jsonObject.toString());
 			
 				jsonArray.add(jsonObject);
 			}
-			System.out.println(jsonArray);
+			
 			out.write(jsonArray.toString());
 			response.setStatus(200);
 			

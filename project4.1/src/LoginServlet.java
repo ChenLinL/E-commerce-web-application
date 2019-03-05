@@ -31,9 +31,10 @@ public class LoginServlet extends HttpServlet {
   	
   	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
+        String userAgent = request.getHeader("User-Agent");
 
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+        //System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
         
         try {     	       	
 			Connection dbcon = dataSource.getConnection();
@@ -74,10 +75,14 @@ public class LoginServlet extends HttpServlet {
 				else
 				{
 					boolean check = false;
-					/*
 					try {
-						RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-						check = true;
+						 if (userAgent != null && !userAgent.contains("Android")) { 
+							 RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+							 check = true;
+						 }
+						 else {
+							 check = true;
+						 }
 					}
 					catch(Exception e)
 					{
@@ -87,10 +92,7 @@ public class LoginServlet extends HttpServlet {
 						responseJsonObject.addProperty("message", "Recaptcha Verification Failed");
 						response.getWriter().write(responseJsonObject.toString());
 					}
-					*/
-					
-					// need to chagne back
-					if (!check)
+					if (check)
 					{
 						// login success
 						String sessionId = ((HttpServletRequest) request).getSession().getId();
