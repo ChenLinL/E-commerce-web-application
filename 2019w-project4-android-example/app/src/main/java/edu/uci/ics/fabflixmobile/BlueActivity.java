@@ -22,7 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import java.util.List;
 import java.util.ArrayList;
 
 public class BlueActivity extends ActionBarActivity {
@@ -177,6 +177,8 @@ public class BlueActivity extends ActionBarActivity {
                 String movie_director = movie.getString("movie_director");
                 String release_year = movie.getString("movie_year");
                 JSONArray movie_genre = movie.getJSONArray("movie_genre");
+                String get_genre = movie_genre.toString();
+
                 JSONArray movie_star = movie.getJSONArray("movie_star");
 
                 list_movies.add(new SingleMovie(m_id, movie_title, release_year, movie_director, movie_genre, movie_star));

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/red"
+    android:background="@color/primary_dark_material_dark"
     tools:context="edu.uci.ics.fabflixmobile.RedActivity">
 
     <ScrollView
@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="25sp" />
 
             <View
@@ -35,19 +36,20 @@
                 android:background="#FFFFFF" />
 
 
-
             <TextView
                 android:id="@+id/link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/red_2_blue_message"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:textColor="@android:color/holo_orange_dark" />
 
 
             <View
@@ -60,13 +62,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password:"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/red_2_green_message"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:textColor="@android:color/holo_orange_dark" />
 
 
             <View
@@ -79,8 +83,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:background="@drawable/abc_ab_share_pack_holo_dark"
                 android:onClick="connectToTomcat"
-                android:text="Login" />
+                android:text="Login"
+                android:textColor="@android:color/holo_orange_dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,6 +97,7 @@
                 android:id="@+id/http_response"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_orange_dark" />
                 android:textSize="20sp" />
 
         </LinearLayout>

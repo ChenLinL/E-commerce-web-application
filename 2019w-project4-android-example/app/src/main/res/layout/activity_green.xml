@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/green"
+    android:background="@color/primary_dark_material_dark"
     tools:context="edu.uci.ics.fabflixmobile.GreenActivity">
 
     <LinearLayout
@@ -19,8 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text="Search" />
+            android:text="Search"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="25sp" />
 
         <View
             android:layout_width="fill_parent"
@@ -37,23 +38,27 @@
 
 
         <TextView
-            android:text="Title of the Movie:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Title of the Movie:"
+            android:textColor="@android:color/holo_orange_dark"
             android:textSize="20sp" />
 
         <EditText
+            android:id="@+id/green_2_blue_message"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/green_2_blue_message"/>
+            android:textColor="@android:color/holo_orange_dark" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:background="@drawable/abc_ab_share_pack_holo_dark"
             android:onClick="connectTomovie"
-            android:text="Search" />
+            android:text="Search"
+            android:textColor="@android:color/holo_orange_dark" />
 
 
 

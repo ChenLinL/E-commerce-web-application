@@ -22,10 +22,13 @@
         </activity>
         <activity
             android:name=".BlueActivity"
-            android:label="@string/title_activity_blue" />
+            android:label="Movie Page"/>
+            <!--android:label="@string/title_activity_blue"-->
+
+
         <activity
             android:name=".GreenActivity"
-            android:label="@string/title_activity_green" />
+            android:label="Search" />
         <activity
             android:name=".SingleMovieActivity"
             android:label="@string/title_activity_single_movie" />

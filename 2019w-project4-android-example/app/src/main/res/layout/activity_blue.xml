@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/blue"
+    android:background="@color/primary_dark_material_dark"
     tools:context="edu.uci.ics.fabflixmobile.BlueActivity">
 
     <LinearLayout
@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Movie Page"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="25sp" />
 
             <TextView
@@ -39,8 +40,10 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
+                android:background="@drawable/abc_ab_share_pack_holo_dark"
                 android:onClick="goBackToSearch"
-                android:text="Back to Search" />
+                android:text="Back to Search"
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -56,8 +59,10 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
+                android:background="@drawable/abc_ab_share_pack_holo_dark"
                 android:onClick="goToPrevious"
-                android:text="Previous page" />
+                android:text="Previous page"
+                android:textColor="@android:color/holo_orange_dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,8 +74,10 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
+                android:background="@drawable/abc_ab_share_pack_holo_dark"
                 android:onClick="goToNext"
-                android:text="Next page" />
+                android:text="Next page"
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -86,20 +93,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="How many item per page"
-                android:textSize="10sp" />
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/item"
-                android:layout_width="150dp"
+                android:layout_width="58dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:textColor="@android:color/holo_orange_dark" />
 
             <Button
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_gravity="end"
+                android:background="@drawable/abc_ab_share_pack_holo_dark"
                 android:onClick="refresh"
-                android:text="Set" />
+                android:text="Set"
+                android:textColor="@android:color/holo_orange_dark" />
 
         </LinearLayout>
 
@@ -112,7 +123,8 @@
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/background_dark" />
 
 
     </LinearLayout>
