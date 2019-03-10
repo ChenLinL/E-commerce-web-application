@@ -24,7 +24,7 @@ public class updateCustomer {
 
         String loginUser = "mytestuser";
         String loginPasswd = "mypassword";
-        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
+        String loginUrl = "jdbc:mysql://172.31.23.138:3306/moviedb";
 
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
