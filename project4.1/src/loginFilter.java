@@ -1,3 +1,4 @@
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServlet;
@@ -9,12 +10,14 @@ import java.io.IOException;
  * Servlet Filter implementation class: LoginFilter.
  * All URL patterns will go through the LoginFilter
  */
+/*
 @WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
+
 public class loginFilter implements Filter {
 
-    /**
-     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-     */
+    
+     //@see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -58,9 +61,11 @@ public class loginFilter implements Filter {
     * below.
      * @see Filter#init(FilterConfig)
      */
+/*
     public void init(FilterConfig fConfig) {
     }
 
     public void destroy() {
     }
 }
+*/

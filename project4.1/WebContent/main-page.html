@@ -16,18 +16,6 @@ table
 	background-image: radial-gradient(grey, black);
 	
 }
-.first{
-	width:30%;
-	float:left;
-}
-
-.second{
-	width:60%;
-	float:right;
-	margin-right:10px;
-	border-left:2px solid gold;
-	padding:50px;
-}
 
 a{
 	color:white;
@@ -102,9 +90,9 @@ h2{
 }
 
 hr { 
-  display: block;
-  border:1px solid white;
+  border-color: gold;
 } 
+
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }
@@ -129,21 +117,21 @@ hr {
 </div>
 <hr>
 
-<div class="first">
 <h2>Movie Genre</h2>
 <p id="genre"></p>
+<hr>
+
 <h2 style="margin-top:40px;">Movie Title</h2>
 <p style="margin-top:20px;" id="title"></p>
 <p id="alphabet"></p>
-</div>
 
-<div class="second">
+<hr>
+
 <h3 id='movie_table_by_rating'></h3>
 <table id=movie_raing_table>
 	<th>Top Three Movies</th>
 	<tbody id=movie_rating_table_body></tbody>
 </table>
-</div>
 
 <!-- include jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

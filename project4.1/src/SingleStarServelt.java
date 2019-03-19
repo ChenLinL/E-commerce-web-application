@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +26,8 @@ public class SingleStarServelt extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	// Create a dataSource which registered in web.xml
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -35,16 +37,15 @@ public class SingleStarServelt extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("application/json"); // Response mime type
-		System.out.println("run single star");
+		
 		// Retrieve parameter id from url request.
 		String id = request.getParameter("id");
-		//System.out.println(id);
+		
 		// Output stream to STDOUT
 		PrintWriter out = response.getWriter();
-		String mtitle = request.getParameter("title");
-		//System.out.println(title);
-		String myear = request.getParameter("year");
-		//System.out.println(year);
+		
+		String mtitle = request.getParameter("title");		
+		String myear = request.getParameter("year");		
 		String mdirector = request.getParameter("director");
 		String mstar = request.getParameter("star");
 		String mfirstRecord = request.getParameter("firstRecord");
@@ -53,9 +54,31 @@ public class SingleStarServelt extends HttpServlet {
 		String msortOrder = request.getParameter("sortOrder");
 		String mtitle_i = request.getParameter("title_i");
 		String mgenre = request.getParameter("genre");
+		
 		try {
 			//Connect to dataSource
-			Connection dbcon = dataSource.getConnection();
+			//Connection dbcon = dataSource.getConnection();
+			
+			Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String query = "SELECT stars.id, stars.name, stars.birthYear, movies.id, movies.title "
 			+ "FROM movies, stars, stars_in_movies "
@@ -66,6 +89,7 @@ public class SingleStarServelt extends HttpServlet {
 			// Set the parameter represented by "?" in the query to the id we get from url,
 			// num 1 indicates the first "?" in the query
 			statement.setString(1, id);
+			
 			// Perform the query
 			ResultSet rs = statement.executeQuery();
 			
@@ -93,8 +117,6 @@ public class SingleStarServelt extends HttpServlet {
 				String star_name = rs.getString("stars.name");
 				//DateFormat dateFormat = new SimpleDateFormat("yyyy");
 				String star_dob = rs.getString("stars.birthYear");
-				//System.out.print(star_dob);
-
 				String mId = rs.getString("movies.id");
 				String movie_title = rs.getString("movies.title");
 			

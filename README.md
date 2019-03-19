@@ -1,3 +1,3 @@
-# cs122b-winter18-team72
-The project_v1.1 is the project1.
-The project1.2 is the latest version.
+The script file named as "parser.java"
+Change the 10 line which is "String fileName = "C:\\Users\\Jing\\Logfile_http10threadnops.txt";" to the right direction where storing the logfile.
+Then just run this script will print the average Ts and average Tf. 

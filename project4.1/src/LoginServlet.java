@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,21 +25,41 @@ import com.google.gson.JsonObject;
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-    
+       
     //Create a dataSource
-  	@Resource(name = "jdbc/moviedb")
-  	private DataSource dataSource;
+  	//@Resource(name = "jdbc/moviedb")
+  	//private DataSource dataSource;
   	
   	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
         String userAgent = request.getHeader("User-Agent");
-
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        //System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
         
-        try {     	       	
-			Connection dbcon = dataSource.getConnection();
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        
+        try {
+        	
+			//Connection dbcon = dataSource.getConnection();
+        	
+        	Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String username = request.getParameter("username");
 	        String password = request.getParameter("password");
@@ -77,7 +99,7 @@ public class LoginServlet extends HttpServlet {
 					boolean check = false;
 					try {
 						 if (userAgent != null && !userAgent.contains("Android")) { 
-							 RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+							 //RecaptchaVerifyUtils.verify(gRecaptchaResponse);
 							 check = true;
 						 }
 						 else {

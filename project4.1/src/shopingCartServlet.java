@@ -34,18 +34,16 @@ public class shopingCartServlet extends HttpServlet {
         String item = request.getParameter("id");
         String func = request.getParameter("func");
         String id = request.getParameter("item");
-
-        //System.out.println(id);
-        //System.out.println(func);
-        //System.out.println(item);
+        
         HttpSession session = request.getSession();
 
         // get the previous items in a ArrayList
-        //ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
+   
         HashMap<String, Map.Entry<String, Integer>>previousItems = (HashMap<String,Map.Entry<String, Integer>>) session.getAttribute("previousItems");
         JsonArray mId = new JsonArray();
         Boolean empty = false;
         String message = "";
+        
         if(func.equals("add")) {
         	empty = true;
         	message = "The"+id+"is add to your shopping cart!";

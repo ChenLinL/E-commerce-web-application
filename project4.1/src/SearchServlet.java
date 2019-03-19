@@ -23,10 +23,7 @@ import java.sql.Statement;
 @WebServlet(name = "SearchServlet", urlPatterns = "/api/search")
 public class SearchServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
     
-  	
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
@@ -43,9 +40,7 @@ public class SearchServlet extends HttpServlet {
 			jsonObject.addProperty("year",year);
 			jsonObject.addProperty("director",director);
 			jsonObject.addProperty("star",star);
-			//jsonObject.addProperty("m_num",m_num);
-//				}
-			System.out.println(jsonObject.toString());
+
 			out.write(jsonObject.toString());
 			response.setStatus(200);
 						

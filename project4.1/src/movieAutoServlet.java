@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,28 +42,9 @@ public class movieAutoServlet extends HttpServlet {
     	}
     	return result;
     }
-    /*
-     * 
-     * Match the query against superheroes and return a JSON response.
-     * 
-     * For example, if the query is "super":
-     * The JSON response look like this:
-     * [
-     * 	{ "value": "Superman", "data": { "heroID": 101 } },
-     * 	{ "value": "Supergirl", "data": { "heroID": 113 } }
-     * ]
-     * 
-     * The format is like this because it can be directly used by the 
-     *   JSON auto complete library this example is using. So that you don't have to convert the format.
-     *   
-     * The response contains a list of suggestions.
-     * In each suggestion object, the "value" is the item string shown in the dropdown list,
-     *   the "data" object can contain any additional information.
-     * 
-     * 
-     */
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+  
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -76,14 +59,36 @@ public class movieAutoServlet extends HttpServlet {
 				response.getWriter().write(jsonArray.toString());
 				return;
 			}	
-			Connection dbcon = dataSource.getConnection();
+			
+			//Connection dbcon = dataSource.getConnection();
+			
+			Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String search_query = "SELECT m.id, m.title FROM moviedb.movies as m, moviedb.ratings as r WHERE m.id = r.movieId and MATCH (title) AGAINST (? IN BOOLEAN MODE) LIMIT 10;";
 			
 			PreparedStatement statement = dbcon.prepareStatement(search_query);
 			query = check_space(query);
 			statement.setString(1, query);
-			System.out.print(statement.toString());
+			
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
@@ -92,29 +97,13 @@ public class movieAutoServlet extends HttpServlet {
 				jsonArray.add(generateJsonObject(id,title));
 			}
 			
-//			for (Integer id : superHeroMap.keySet()) {
-//				String heroName = superHeroMap.get(id);
-//				if (heroName.toLowerCase().contains(query.toLowerCase())) {
-//					jsonArray.add(generateJsonObject(id, heroName));
-//				}
-//			}
-			
 			response.getWriter().write(jsonArray.toString());
 			return;
 		} catch (Exception e) {
-			System.out.println(e);
 			response.sendError(500, e.getMessage());
 		}
 	}
 	
-	/*
-	 * Generate the JSON Object from hero to be like this format:
-	 * {
-	 *   "value": "Iron Man",
-	 *   "data": { "heroID": 11 }
-	 * }
-	 * 
-	 */
 	private static JsonObject generateJsonObject(String id, String title) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("value", title);

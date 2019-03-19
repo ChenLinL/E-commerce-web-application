@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +27,8 @@ public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	// Create a dataSource which registered in web.xml
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -58,12 +60,9 @@ public class Dashboard extends HttpServlet {
 		}
 		max_id = max_id.substring(count, max_id.length());
 		
-		//max_id = max_id.replace("tt", "");
-		
 		int new_id = Integer.parseInt(max_id) + 1;
 		String new_movieId = s1 + Integer.toString(new_id); 
 		
-		System.out.println(new_movieId);
 		return new_movieId;
 		
 	}
@@ -76,21 +75,14 @@ public class Dashboard extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
-		String star= request.getParameter("star");
-		
-		String bod_star= request.getParameter("bod_star");
-		
-		String add = request.getParameter("add");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		
-		
+		String star= request.getParameter("star");		
+		String bod_star= request.getParameter("bod_star");		
+		String add = request.getParameter("add");		
 		String movie= request.getParameter("movie");	
 		String year_i= request.getParameter("year");
-		//int year = Integer.valueOf(year_i);
 		String director = request.getParameter("director");
 		String genre= request.getParameter("genre");
-		
-		
+				
 		boolean status = true;
 		String error_message = "";
 		
@@ -101,12 +93,19 @@ public class Dashboard extends HttpServlet {
 		
 		try {
 			//Connect to dataSource
-			Connection dbcon = dataSource.getConnection();
+			//Connection dbcon = dataSource.getConnection();
+			
+			Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			if (add.equals("0"))
-			{
-				System.out.println("ADDED STAR");
-				
+			{				
 				String pre_query = "select max(id) as id from stars";					
 				PreparedStatement statement = dbcon.prepareStatement(pre_query);
 				
@@ -117,7 +116,7 @@ public class Dashboard extends HttpServlet {
 				{
 					String max_id = rs.getString("id");
 					String new_id = generate_newstarId(max_id);
-					System.out.println(new_id);
+					
 					// insert star when birth year is indicated
 					if (!bod_star.equals(""))
 					{
@@ -139,16 +138,14 @@ public class Dashboard extends HttpServlet {
 				}
 
 				rs.close();			
-				System.out.println(query2);
-				//statement = dbcon.prepareStatement(query2);
+				
 				statement.executeUpdate();
 				statement.close();
 			}
 			
 			// add a movie to database
 			else if (add.equals("1"))
-			{
-				
+			{				
 				CallableStatement cStmt = dbcon.prepareCall("{call add_movie(?,?,?,?,?)}");
 			
 				String star_id="";
@@ -172,14 +169,10 @@ public class Dashboard extends HttpServlet {
 					cstmtRs.close();
 				}
 				cStmt.close();
-				System.out.print("message");
-				System.out.print(error_message);
 			}
 			
 			String query = "show tables";
-
 			PreparedStatement statement = dbcon.prepareStatement(query);
-
 			ResultSet rs = statement.executeQuery();
 			
 			JsonObject result = new JsonObject();
@@ -189,11 +182,10 @@ public class Dashboard extends HttpServlet {
 			{	
 				JsonObject table = new JsonObject();
 				String table_name = rs.getString("Tables_in_moviedb");
-				//System.out.println(table_name);
-				String query_info = "describe "+ table_name;
-			
+	
+				String query_info = "describe "+ table_name;			
 				PreparedStatement table_info = dbcon.prepareStatement(query_info);
-				//System.out.println(table_info.toString());
+				
 				// Perform the query
 				ResultSet info_rs = table_info.executeQuery();
 			
@@ -205,8 +197,6 @@ public class Dashboard extends HttpServlet {
 					String filed = info_rs.getString("field");
 					String type = info_rs.getString("type");
 					String Null = info_rs.getString("null");
-					//System.out.println(filed);
-					//System.out.println(type);
 					fileds.add(filed);
 					types.add(type);
 					Nulls.add(Null);
@@ -218,7 +208,7 @@ public class Dashboard extends HttpServlet {
 				tables.add(table);
 				
 			}
-			//System.out.print(tables.toString());
+			
 			if(status) {
 				result.addProperty("status", "success");
 				result.add("tables", tables);

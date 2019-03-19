@@ -3,6 +3,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -28,8 +30,8 @@ public class MainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	//Create a dataSource
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 	
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,8 +48,28 @@ public class MainPageServlet extends HttpServlet {
 		
 		try {
 			//Connect to dataSource
-			Connection dbcon = dataSource.getConnection();
-			//Statement statement = dbcon.createStatement();
+			//Connection dbcon = dataSource.getConnection();
+			
+			Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, stars.name as Stars, stars.id, ratings.rating, genres.name as Genre "
 				       + "FROM movies, (select * from ratings order by rating desc limit 3) ratings, genres, genres_in_movies, stars, stars_in_movies "

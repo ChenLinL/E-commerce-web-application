@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +25,8 @@ public class SingleMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	// Create a dataSource which registered in web.xml
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -40,12 +42,10 @@ public class SingleMovieServlet extends HttpServlet {
 
 		// Output stream to STDOUT
 		PrintWriter out = response.getWriter();
-		String mtitle = request.getParameter("title");
-		//System.out.println(title);
-		String myear = request.getParameter("year");
-		//System.out.println(year);
-		String mdirector = request.getParameter("director");
-		//System.out.println(director);
+		
+		String mtitle = request.getParameter("title");		
+		String myear = request.getParameter("year");		
+		String mdirector = request.getParameter("director");		
 		String mstar = request.getParameter("star");
 		String mfirstRecord = request.getParameter("firstRecord");
 		String mnumRecord = request.getParameter("numRecord");
@@ -57,15 +57,33 @@ public class SingleMovieServlet extends HttpServlet {
 
 		try {
 			//Connect to dataSource
-			Connection dbcon = dataSource.getConnection();
+			//Connection dbcon = dataSource.getConnection();
+			
+			Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+                    
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String query = "SELECT movies.id, movies.title, movies.year, movies.director, genres.name as Genre, stars.name as Stars, stars.id, ratings.rating "
 					+ "FROM movies, ratings, genres, genres_in_movies, stars, stars_in_movies "
 					+ "WHERE movies.id = ratings.movieId and genres.id = genres_in_movies.genreId and genres_in_movies.movieId = movies.id and "
 					+ "stars_in_movies.movieId = movies.id and stars_in_movies.starId = stars.id and movies.id = ? ";
-				
-			
-			System.out.println("RUNNING SINGLEMOVIE SERVLET");
 			
 			PreparedStatement statement = dbcon.prepareStatement(query);
 

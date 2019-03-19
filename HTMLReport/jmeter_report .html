@@ -1,0 +1,127 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    background-color: linen;
+}
+
+td {
+    border-top-style: solid;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%">
+  <tr style="font-weight:bold; background-color: orange">
+    <td width="300px">Single-instance version cases</td>
+    <td>Graph Results Screenshot</td>
+    <td>Average Query Time(ms)</td>
+    <td>Average Search Servlet Time(ms)</td>
+    <td>Average JDBC Time(ms)</td>
+    <td>Analysis</td>
+  </tr>
+  <tr>
+    <td>Case 1: HTTP/1 thread</td>
+    <td><img src="Graph Results for http 1 thread.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
+    <td>179</td>
+    <td>2.906</td>
+    <td>1.973</td>
+    <td>When running the servlet with 1 thread, the average servlet running time is 2.906 and the average JDBC time is 1.973 with 
+    	both connection pooling and prepared statement. This is the base run and it will be compared to the others.</td>
+  </tr>
+  <tr>
+    <td>Case 2: HTTP/10 threads</td>
+    <td><img src="Graph Results for http 10 thread.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
+    <td>196</td>
+    <td>3.108</td>
+    <td>2.152</td>
+    <td>When running 10 threads, all the required times become higher since we are running servlet concurrently. 
+    	That means when there are multiple users access the website, it takes longer to receive the response.</td>
+  </tr>
+  <tr>
+    <td>Case 3: HTTPS/10 threads</td>
+    <td><img src="Graph Results for https 10 thread.png" alt="Graph Results Screenshot Case 3" style="width:304px;height:228px;"></td>
+    <td>392</td>
+    <td>3.420</td>
+    <td>2.379</td>
+    <td>Since this case uses HTTPS, TS time and TJ time are slightly longer than the previous case.
+    	The average query time however, is much longer due to the https overhead.</td>
+  </tr>
+  <tr>
+    <td>Case 4: HTTP/10 threads/No prepared statements</td>
+    <td><img src="Graph Results for 10 thread no ps.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>291</td>
+    <td>2.175</td>
+    <td>2.072</td>
+    <td>Without using prepared statement, the average TS and TJ time is faster since it saves the time for setting values based on user
+    	input. The average TS time significantly decrease because only the statement for searching movie is executed. The other statement which
+    	is for movie pagination is not included here. </td>
+  </tr>
+  <tr>
+    <td>Case 5: HTTP/10 threads/No connection pooling</td>
+    <td><img src="Graph Results for 10 thread no connection pooling.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>200</td>
+    <td>4.008</td>
+    <td>2.727</td>
+    <td>The average TS and TJ time becomes higher since the servlet runs without connection pooling. A new connection will be created
+    	every time when the website is accessed. Therefore, the average running time takes longer.</td>
+  </tr>
+
+</table> 
+
+
+<table style="width:100%">
+  <tr style="font-weight:bold; background-color: orange">
+    <td width="300px">Scaled version cases</td>
+    <td>Graph Results Screenshot</td>
+    <td>Average Query Time(ms)</td>
+    <td>Average Search Servlet Time(ms)</td>
+    <td>Average JDBC Time(ms)</td>
+    <td>Analysis</td>
+  </tr>
+  <tr>
+    <td>Case 1: HTTP/1 thread</td>
+    <td><img src="Graph Results for scaled case 1.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
+    <td>179</td>
+    <td>3.440</td>
+    <td>2.325</td>
+    <td>The average TS and TJ time is almost the same as single instance. Since we are using 1 thread, 
+    	load balancing does not really help improve the performance. </td>
+  </tr>
+  <tr>
+    <td>Case 2: HTTP/10 threads</td>
+    <td><img src="Graph Results for scaled case 2.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
+    <td>209</td>
+    <td>3.621</td>
+    <td>2.478</td>
+    <td>When multiple users access the database at the same time, the average TS and TJ time is still higher even though we use load
+    	balancing. This is possible since it takes more time to access the remote database, which includes a lot of 
+    	network traffic.</td>
+  </tr>
+  <tr>
+    <td>Case 3: HTTP/10 threads/No prepared statements</td>
+    <td><img src="Graph Results scaled case 3.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>366</td>
+    <td>3.331</td>
+    <td>3.000</td>
+    <td>The average query time becomes higher since no prepared statement is used. A new query will be generated and executed every time
+    	when searching movie by title. The average TS and TJ time is also higher than single instance due to load balancer may causes 
+    	network traffic. </td>
+  </tr>
+  <tr>
+    <td>Case 4: HTTP/10 threads/No connection pooling</td>
+    <td><img src="Graph Results scaled case 4.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>221</td>
+    <td>4.796</td>
+    <td>3.320</td>
+    <td>Compare to 10 threads using connection pooling in scaled version, the average TS and TJ time is slower since a new connection
+    	will be made each time when accessing the database. The time is slightly higher than single instance, it is possible that load
+    	balancer causes more time to process the connection request, which will potentially increase the average TS and TJ time.</td>
+  </tr>
+
+</table> 
+
+</body>
+</html>

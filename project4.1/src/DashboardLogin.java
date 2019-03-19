@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,18 +26,39 @@ public class DashboardLogin extends HttpServlet {
     
     
     //Create a dataSource
-  	@Resource(name = "jdbc/moviedb")
-  	private DataSource dataSource;
+  	//@Resource(name = "jdbc/moviedb")
+  	//private DataSource dataSource;
   	
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	System.out.println("query11");
+    	
     	PrintWriter out = response.getWriter();
     	
     	try {
-			Connection dbcon = dataSource.getConnection();
+			//Connection dbcon = dataSource.getConnection();
+    		
+    		Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            
+            int randomNumber = (int)(Math.random()*2);
+            DataSource ds = null;
+            
+            // Look up data source
+            // if randomNumber is 0, access master MySql database; otherwise access slave MySql database  
+            if (randomNumber == 0)
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/masterdb");
+            }
+            
+            else
+            {
+            	ds = (DataSource) envCtx.lookup("jdbc/slavedb");
+            }
+            
+            // Connect to moviedb
+            Connection dbcon = ds.getConnection();
 			
 			String username = request.getParameter("e_name");
 	        String password = request.getParameter("e_password");
@@ -58,9 +81,7 @@ public class DashboardLogin extends HttpServlet {
 	     	else
 	     	{
 	     		String encryptedPassword = rs.getString("e.password");
-	     		
-	     		System.out.println(encryptedPassword);
-	     		
+    		
 	     		boolean success = new StrongPasswordEncryptor().checkPassword(password, encryptedPassword);
 	     		
 				if (!success)
@@ -101,4 +122,3 @@ public class DashboardLogin extends HttpServlet {
     	out.close();
    }
 }
-
